@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="分类：oracle版权声明：本文为博主原创文章，未经博主允许不得转载。本次（2017-03-11）修改：1）修改程序安装目录名   /home —&amp;gt; /data2）删减了一些不必要的包（ksh）3）增加了rlwrap 一个可以在sqlplus中可以使用键盘方向键来回找历史命令。4）增加了一些关键的截图，为帮助有需要的朋友理好知道安装进度5）蓝色字体、双#号是新增说明 1、准备系统、软件#o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="racle 11g 在centos7上静默安装与安装时的错误处理">
+<meta property="og:url" content="http://blog.luoml.space/2017/10/07/article-title/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="分类：oracle版权声明：本文为博主原创文章，未经博主允许不得转载。本次（2017-03-11）修改：1）修改程序安装目录名   /home —&amp;gt; /data2）删减了一些不必要的包（ksh）3）增加了rlwrap 一个可以在sqlplus中可以使用键盘方向键来回找历史命令。4）增加了一些关键的截图，为帮助有需要的朋友理好知道安装进度5）蓝色字体、双#号是新增说明 1、准备系统、软件#o">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-14T01:55:32.081Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="racle 11g 在centos7上静默安装与安装时的错误处理">
+<meta name="twitter:description" content="分类：oracle版权声明：本文为博主原创文章，未经博主允许不得转载。本次（2017-03-11）修改：1）修改程序安装目录名   /home —&amp;gt; /data2）删减了一些不必要的包（ksh）3）增加了rlwrap 一个可以在sqlplus中可以使用键盘方向键来回找历史命令。4）增加了一些关键的截图，为帮助有需要的朋友理好知道安装进度5）蓝色字体、双#号是新增说明 1、准备系统、软件#o">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.luoml.space/2017/10/07/article-title/"/>
+
+
+
+
+
+  <title>racle 11g 在centos7上静默安装与安装时的错误处理 | Lucas</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lucas</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.luoml.space/2017/10/07/article-title/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lucas">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lucas">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">racle 11g 在centos7上静默安装与安装时的错误处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-07T17:54:09+08:00">
+                2017-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 分类：<br>oracle<br>版权声明：本文为博主原创文章，未经博主允许不得转载。<br>本次（2017-03-11）修改：<br>1）修改程序安装目录名   /home —&gt; /data<br>2）删减了一些不必要的包（ksh）<br>3）增加了rlwrap 一个可以在sqlplus中可以使用键盘方向键来回找历史命令。<br>4）增加了一些关键的截图，为帮助有需要的朋友理好知道安装进度<br>5）蓝色字体、双#号是新增说明</p>
+<h1 id="1、准备系统、软件"><a href="#1、准备系统、软件" class="headerlink" title="1、准备系统、软件"></a>1、准备系统、软件</h1><p>#oracle 11g：<br>linux.x64_11gR2_database_2of2.zip<br>linux.x64_11gR2_database_1of2.zip</p>
+<p>#SYSTEM<br>CentOS7 X86_64</p>
+<h1 id="2、安装依赖库"><a href="#2、安装依赖库" class="headerlink" title="2、安装依赖库"></a>2、安装依赖库</h1><p>#下载安装pdksh</p>
+<p>rpm -ivh pdksh-5.2.14-37.el5_8.1.x86_64.rpm</p>
+<p>##： 安装这个pdksh rpm包时可能会出现与ksh冲突问题，如果不使用ksh可以把ksh卸载了，我安装了非常多次发现并不影响使用—-（2017-03-11）</p>
+<p>#安装其它依赖<br>yum -y install binutils compat-libcap1 compat-libstdc++ gcc gcc-c++ glibc glibc-devel libgcc libstdc++ libstdc++-devel libaio sysstat libaio-devel elfutils-libelf-devel unixODBC unixODBC-devel</p>
+<p>##： 删除了ksh安装包</p>
+<h1 id="3、用户目录创建"><a href="#3、用户目录创建" class="headerlink" title="3、用户目录创建"></a>3、用户目录创建</h1><p>groupadd oinstall<br>groupadd dba<br>useradd -m -g oinstall -G dba oracle<br>echo “oracle:password” | chpasswd<br>mkdir -p /home/oracle/ora11g<br>chown -R oracle:oinstall /home/oracle/ora11g<br>chmod -R 775 /home/oracle/ora11g</p>
+<h1 id="4、系统配置"><a href="#4、系统配置" class="headerlink" title="4、系统配置"></a>4、系统配置</h1><p>#内核参数调整<br>cat &gt;&gt; /etc/sysctl.conf &lt;&lt;EOF<br>fs.aio-max-nr = 3145728<br>fs.file-max = 6815744<br>kernel.shmall = 1073741824<br>kernel.shmmax = 4398046511104<br>kernel.shmmni = 4096<br>kernel.sem = 250 32000 100 142<br>net.ipv4.ip_local_port_range = 9000 65500<br>net.core.rmem_default = 262144<br>net.core.rmem_max = 4194304<br>net.core.wmem_default = 262144<br>net.core.wmem_max = 1048576<br>EOF</p>
+<p>#配置全局变量<br>cat &gt;&gt; /etc/profile &lt;&lt;EOF<br>if [ $USER = “oracle” ]; then<br>   if [ $SHELL = “/bin/ksh” ];then<br>    ulimit -p 16384<br>    ulimit -n 65536<br>     else<br>    ulimit -u 16384 -n 65536<br>   fi<br>fi<br>EOF</p>
+<p>##：这个环境变量发现并没有什么用（重复配置），因为后面配置文件句柄数时已经永久配置了参数。</p>
+<p>#配置oracle用户变量<br>cat &gt;&gt; /data/oracle/.bash_profile &lt;&lt;EOF<br>export TMP=/tmp<br>export TMPDIR=$TMP<br>export ORACLE_HOSTNAME=$(hostname)<br>export ORACLE_BASE=/data/oracle/ora11g<br>export ORACLE_HOME=/data/oracle/ora11g/product/11.2.0/db_1<br>export ORACLE_SID=orcl11g<br>export ORACLE_TERM=xterm<br>export PATH=$ORACLE_HOME/bin:$PATH</p>
+<p>#以下配置在参考别人写时是要配置的，但是我加上后，系统命令无法执行，就直接注释了</p>
+<p>#export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib64:/usr/lib:/usr/lib64:/usr/local/lib64</p>
+<p>#export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib</p>
+<p>#export LD_ASSUME_KERNEL=2.6.18</p>
+<p>##：直接删除了<br>export NLS_LANG=”american_america.UTF8”<br>export NLS_LANG=”AMERICAN_AMERICA.US7ASCII”<br>EOF</p>
+<p>#给oracle用户配置句柄数和文件打开数<br>cat &gt;&gt; /etc/security/limits.conf &lt;&lt;EOF<br>oracle soft nproc 2048<br>oracle hard nproc 16384<br>oracle soft nofile 1024<br>oracle hard nofile 65536<br>EOF</p>
+<p>#配置oracle用户变量<br>cat &gt;&gt; /home/oracle/.bashrc &lt;&lt;EOF<br>alias sysdba=’sqlplus “/ nolog”‘<br>EOF</p>
+<p>#配置oracle系统配置文件<br>cat &gt;&gt; /etc/oraInst.loc &lt;&lt;EOF<br>inventory_loc=/data/oracle/ora11g/oraInventory<br>inst_group=oinstall<br>EOF</p>
+<p>#授权<br>chmod 664 /etc/oraInst.loc</p>
+<p>#加载内核参数<br>sysctl -p</p>
+<p>#给安装文件授权，我这里放在oracle home目录下<br>chown -R oracle:oinstall /home/oracle/database</p>
+<p>#添加swap文件</p>
+<p>#虚拟机没有或者不够swap空间<br>dd if=/dev/zero of=/data/swap4g bs=1M count=4096<br>mkswap /data/swap4g<br>chmod 600 /data/swap4g<br>swapon /data/swap4g</p>
+<p>##：修改了文件/home/swap — &gt; /data/swap4g</p>
+<h1 id="5、安装、安装排错"><a href="#5、安装、安装排错" class="headerlink" title="5、安装、安装排错"></a>5、安装、安装排错</h1><p>#解压安装文件</p>
+<p>#配置静默安装应答文件<br>su oracle ; cd ~<br>cp /home/oracle/database/response/* .</p>
+<p>#配置初始化安装文件<br>sed -i ‘s/oracle.install.option=.<em>/oracle.install.option=INSTALL_DB_SWONLY/g’ db_install.rsp<br>sed -i “s/ORACLE_HOSTNAME=.</em>/ORACLE_HOSTNAME=$(hostname)/g” db_install.rsp<br>sed -i ‘s/UNIX_GROUP_NAME=.<em>/UNIX_GROUP_NAME=oinstall/g’ db_install.rsp<br>sed -i ‘s/INVENTORY_LOCATION=.</em>/INVENTORY_LOCATION=\/data\/oracle\/ora11g\/oraInventory/g’ db_install.rsp<br>sed -i ‘s/SELECTED_LANGUAGES=.<em>/SELECTED_LANGUAGES=en,zh_CN/g’ db_install.rsp<br>sed -i ‘s/ORACLE_HOME=.</em>/ORACLE_HOME=\/data\/oracle\/ora11g\/product\/11.2.0\/db_1/g’ db_install.rsp<br>sed -i ‘s/ORACLE_BASE=.<em>/ORACLE_BASE=\/data\/oracle\/ora11g/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.InstallEdition=.</em>/oracle.install.db.InstallEdition=EE/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.isCustomInstall=.<em>/oracle.install.db.isCustomInstall=true/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.DBA_GROUP=.</em>/oracle.install.db.DBA_GROUP=dba/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.OPER_GROUP=.<em>/oracle.install.db.OPER_GROUP=oinstall/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.type=.</em>/oracle.install.db.config.starterdb.type=GENERAL_PURPOSE/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.globalDBName=.<em>/oracle.install.db.config.starterdb.globalDBName=ora11g/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.SID=.</em>/oracle.install.db.config.starterdb.SID=orcl/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.characterSet=.<em>/oracle.install.db.config.starterdb.characterSet=AL32UTF8/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.memoryOption=.</em>/oracle.install.db.config.starterdb.memoryOption=true/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.password.ALL=.<em>/oracle.install.db.config.starterdb.password.ALL=oracle/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.control=.</em>/oracle.install.db.config.starterdb.control=DB_CONTROL/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.dbcontrol.enableEmailNotification=.<em>/oracle.install.db.config.starterdb.dbcontrol.enableEmailNotification=true/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.dbcontrol.emailAddress=.</em><a href="mailto:/oracle.install.db.config.starterdb.dbcontrol.emailAddress=test@test.com" target="_blank" rel="noopener">/oracle.install.db.config.starterdb.dbcontrol.emailAddress=test@test.com</a>/g’ db_install.rsp<br>sed -i ‘s/oracle.install.db.config.starterdb.dbcontrol.SMTPServer=.<em>/oracle.install.db.config.starterdb.dbcontrol.SMTPServer=smtp.test.com/g’ db_install.rsp<br>sed -i ‘s/DECLINE_SECURITY_UPDATES=.</em>/DECLINE_SECURITY_UPDATES=true/g’ db_install.rsp<br>chmod 640 db_install.rsp</p>
+<p>##：修改目录配置/home —&gt; /data</p>
+<p>##：修正在sed 参数  </p>
+<p>#配置监听应答文件<br>sed -i ‘s/INSTALL_TYPE=.*/INSTALL_TYPE=””custom””/g’ netca.rsp</p>
+<p>#配置数据库应答文件<br>sed -i ‘s#GDBNAME =.<em>#GDBNAME = “orcl11g”#g’ dbca.rsp<br>sed -i ‘s#SID =.</em>#SID = “orcl11g”#g’ dbca.rsp<br>sed -i ‘s/#SYSPASSWORD =.<em>/SYSPASSWORD = “oracle”/g’ dbca.rsp<br>sed -i ‘s/#SYSTEMPASSWORD =.</em>/SYSPASSWORD = “oracle”/g’ dbca.rsp</p>
+<p>#安装<br>/home/oracle/database/runInstaller -silent -responseFile /home/oracle/db_install.rsp</p>
+<p>#先使用上面命令检查系统环境合不合格，如果出现依赖库版本不对（一般是系统的版本高了，oracle要求的版本低一些）和一些内核参数检测不出来（并不是没有配置），这些可以忽略。如果其它的报错根据报错去给系统作相应的调整吧。</p>
+<p>#排错只能看日志，没有其它更好的办法。</p>
+<p>#比如以下错误都可以忽略<br>801:INFO: Error Message:PRVF-7543 : 操作系统内核参数 “semmni” 在节点 “centos7-6” 上没有适当的值 [应为 = “128”; 找到 = “0”]。<br>930:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “libaio-0.3.105 (i386)”<br>951:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “glibc-2.3.4-2.41 (i686)”<br>972:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “compat-libstdc++-33-3.2.3 (i386)”<br>984:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “compat-libstdc++-33-3.2.3 (x86_64)”<br>1050:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “libaio-devel-0.3.105 (i386)”<br>1071:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “libgcc-3.4.6 (i386)”<br>1092:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “libstdc++-3.4.6 (i386)”<br>1131:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “unixODBC-2.2.11 (i386)”<br>1152:INFO: Error Message:PRVF-7532 : 节点 “centos7-6” 上缺少程序包 “unixODBC-devel-2.2.11 (i386)”</p>
+<p>##：新增错误信息</p>
+<p>#以下命令是忽略那些可忽略参数的命令<br>/home/oracle/database/runInstaller -silent -ignorePrereq -responseFile /home/oracle/db_install.rsp</p>
+<p>#检测安完成后，会提示用root用户执行以下面的命令去完成最后的安装<br>sh /home/oracle/ora11g/product/11.2.0/db_1/root.sh</p>
+<p>##：到目前为止，oracle已经全部安装完成</p>
+<h1 id="6、创建实例、监听文件"><a href="#6、创建实例、监听文件" class="headerlink" title="6、创建实例、监听文件"></a>6、创建实例、监听文件</h1><p>#创建实例<br>dbca -silent -responseFile /home/oracle/dbca.rsp</p>
+<p>#创建监听<br>netca /silent /responseFile /home/oracle/netca.rsp</p>
+<p>#查看oracle的状态</p>
+<h1 id="7、安装rlwrap"><a href="#7、安装rlwrap" class="headerlink" title="7、安装rlwrap"></a>7、安装rlwrap</h1><p>yum install readline* ncurses-devel<br>tar xf rlwrap-0.30.tar.gz.zip<br>cd rlwrap-0.30<br>./configure<br>make<br>make install</p>
+<p>#直接配置在.bash_profile里<br>alias sqlplus=’rlwrap sqlplus’<br>alias rman=’rlwrap rman’</p>
+<p>source .bash_profile</p>
+<p>#里边涉及的一些敏感数据就不打码了，因为都在VM里跑的。。。</p>
+<p>#主要参考文章出处：<a href="http://blog.csdn.net/dc666/article/details/50014693，非常感谢！" target="_blank" rel="noopener">http://blog.csdn.net/dc666/article/details/50014693，非常感谢！</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/13/my-git/" rel="prev" title="my git">
+                my git <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lucas</p>
+              <p class="site-description motion-element" itemprop="description">:)</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、准备系统、软件"><span class="nav-number">1.</span> <span class="nav-text">1、准备系统、软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、安装依赖库"><span class="nav-number">2.</span> <span class="nav-text">2、安装依赖库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、用户目录创建"><span class="nav-number">3.</span> <span class="nav-text">3、用户目录创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、系统配置"><span class="nav-number">4.</span> <span class="nav-text">4、系统配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、安装、安装排错"><span class="nav-number">5.</span> <span class="nav-text">5、安装、安装排错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、创建实例、监听文件"><span class="nav-number">6.</span> <span class="nav-text">6、创建实例、监听文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、安装rlwrap"><span class="nav-number">7.</span> <span class="nav-text">7、安装rlwrap</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lucas</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
