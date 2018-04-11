@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F04%2F11%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment ＣＮＡＭＥ1$ echo "blog.lucas.space"&gt;source/CNAME]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[ORACLE11G 链接缓慢问题排查]]></title>
     <url>%2F2018%2F04%2F08%2FORACLE11G-%E9%93%BE%E6%8E%A5%E7%BC%93%E6%85%A2%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%2F</url>
     <content type="text"><![CDATA[问题描述： 服务器centos7,客服端任意 本地使用sqlplus / 连接很快，sqlplus xxx/xxx@127.0.0.1/sid 很慢 windows客服端在创建链接后也很慢 问题排查 tnsping 没有延迟 11G用户验证问题（只要有登陆错误，就会有延迟累计）－－－－－－不是 监听文件配置问题 －－－－－－不是 日志文件过大 －－－－－－－不是 机器名在监听文件和网络上的名字不一致－－－－－－－是 /etc/hosts /etc/hostname $ORACLE_HOME/network/admin/tnsname.ora /etc/sysconf/network reboot]]></content>
       <tags>
         <tag>linux,ORACLE</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F03%2F14%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
   <entry>
     <title><![CDATA[gateone]]></title>
