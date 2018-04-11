@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>zabbiz使用之添加Mysql监控 | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="添加 Mysql 监控Agent 端配置：在/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 文件中指定了 zabbix agent如何获取 mysql 服务的各种登录信息，并在/var/lib/zabbix/目录中新建”.my.cnf”文件，用以指定 zabbix agent 如何登陆数据库，默认使用的是 zabbix 用户，可以在 zab">
+<meta name="keywords" content="zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zabbiz使用之添加Mysql监控">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/11/zabbiz使用之添加Mysql监控/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="添加 Mysql 监控Agent 端配置：在/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 文件中指定了 zabbix agent如何获取 mysql 服务的各种登录信息，并在/var/lib/zabbix/目录中新建”.my.cnf”文件，用以指定 zabbix agent 如何登陆数据库，默认使用的是 zabbix 用户，可以在 zab">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-11T05:08:23.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zabbiz使用之添加Mysql监控">
+<meta name="twitter:description" content="添加 Mysql 监控Agent 端配置：在/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 文件中指定了 zabbix agent如何获取 mysql 服务的各种登录信息，并在/var/lib/zabbix/目录中新建”.my.cnf”文件，用以指定 zabbix agent 如何登陆数据库，默认使用的是 zabbix 用户，可以在 zab">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>zabbiz使用之添加Mysql监控</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-04-11</span>
+            </div>
+            
+                <div>
+                    
+                         <a class="tag is-post-tag" href="/tags/zabbix/">zabbix</a>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="添加-Mysql-监控"><a href="#添加-Mysql-监控" class="headerlink" title="添加 Mysql 监控"></a>添加 Mysql 监控</h1><p>Agent 端配置：<br>在/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 文件中指定了 zabbix agent<br>如何获取 mysql 服务的各种登录信息，并在/var/lib/zabbix/目录中新建”.my.cnf”文件，用<br>以指定 zabbix agent 如何登陆数据库，默认使用的是 zabbix 用户，可以在 zabbix_conf<br>文件中找到密码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mkdir /var/lib/zabbix</span></span><br><span class="line"><span class="comment">#vim /var/lib/zabbix/.my.cnf</span></span><br><span class="line">[mysql]</span><br><span class="line">host=localhost</span><br><span class="line">user=zabbix</span><br><span class="line">password=zabbix</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">[mysqladmin]</span><br><span class="line">host=localhost</span><br><span class="line">user=zabbix</span><br><span class="line">password=zabbix</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line"><span class="comment">#service zabbix-agent restart</span></span><br><span class="line"><span class="comment">#在数据库中进行授权：</span></span><br><span class="line">Mysql&gt; GRANT USAGE ON *.* TO zabbix@localhost IDENTIFIED BY ‘zabbix’;</span><br><span class="line">Mysql&gt;FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>在 zabbix_server 端测试是否可以得到检测数据：<br>zabbix_get -s 10.10.1.13 -p 10050 -k mysql.ping<br>1<br>如显示 1，则代表可以通过zabbix_agent 获取到数据。<br>Web 端配置：<br>依次点击 组态–主机–（要监控 mysql 的主机）–模板–选择–Template App Mysql–添加<br>–更新。<br>完成后，点击监测中图形，选择主机和 Mysql bandwidth，等待检测。</p>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>

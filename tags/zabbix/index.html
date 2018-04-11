@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>Tag: zabbix | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content=":)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lucas">
+<meta property="og:url" content="https://dissipator.github.io/tags/zabbix/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content=":)">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lucas">
+<meta name="twitter:description" content=":)">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <style>
+    .container.tag-cate-wrap {
+        min-height: 93vh;
+    }
+
+    .category-title-inner {
+        padding-top: 50px;
+    }
+
+    strong {
+        text-transform: capitalize;
+    }
+</style>
+
+
+<div class="container tag-cate-wrap">
+    <div class="category-title-inner content has-text-centered">
+        <h1><strong style="border-top: 2px solid; border-bottom: 2px solid;">tag·zabbix</strong></h1>
+    </div>
+
+    
+    
+        <div class="box">
+            <article class="media">
+                
+                <a href="/2018/04/11/zabbiz使用之添加NGINX监控/">
+                    
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>zabbiz使用之添加NGINX监控</strong> <small class="post-date">at: 2018-04-11</small>
+                                <br>
+                                zabbix使用之添加NGINX监控Agent端首先要检查Nginx是否安装了 http_stub_status_module 模块，通过下面的命令可以看到编译参数。
+1nginx -V
+如果没有这个模块，还需要重新编译Nginx.
+配置NginxNginx 80端口的server配置增加如下的片段
+  location /nginx_status { ..
+                            </p>
+                            <button class="button is-info">Read</button>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        </div>
+    
+        <div class="box">
+            <article class="media">
+                
+                <a href="/2018/04/11/zabbiz使用之添加Mysql监控/">
+                    
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>zabbiz使用之添加Mysql监控</strong> <small class="post-date">at: 2018-04-11</small>
+                                <br>
+                                添加 Mysql 监控Agent 端配置：在/etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 文件中指定了 zabbix agent如何获取 mysql 服务的各种登录信息，并在/var/lib/zabbix/目录中新建”.my.cnf”文件，用以指定 zabbix agent 如何登陆数据库，默认..
+                            </p>
+                            <button class="button is-info">Read</button>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        </div>
+    
+</div>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
