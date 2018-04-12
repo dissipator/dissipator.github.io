@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>通过SSH协议采集监控数据 | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过SSH协议采集监控数据Zabbix中通过SSH协议也可以实现监控目标，通过SSH agent监控方式，需要对服务器进行监控但又不能安装Zabbix agent的环境中非常有用。Zabbix中使用SSh agent时要求libssh2的最低版本是 1.0.0。 SSH agent支持两种身份认证的方式：基于用户名密码的方式和基于秘钥的方式，使用用户名密码的方式不需要任何特殊的配置，添加监控项时需">
+<meta name="keywords" content="zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过SSH协议采集监控数据">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/11/通过SSH协议采集监控数据/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="通过SSH协议采集监控数据Zabbix中通过SSH协议也可以实现监控目标，通过SSH agent监控方式，需要对服务器进行监控但又不能安装Zabbix agent的环境中非常有用。Zabbix中使用SSh agent时要求libssh2的最低版本是 1.0.0。 SSH agent支持两种身份认证的方式：基于用户名密码的方式和基于秘钥的方式，使用用户名密码的方式不需要任何特殊的配置，添加监控项时需">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s3.51cto.com/wyfs02/M01/94/43/wKiom1kL7o6CJbSGAAA8oE4ynjA504.jpg">
+<meta property="og:image" content="https://s2.51cto.com/wyfs02/M00/94/44/wKiom1kL7p3hNFe5AAEg9a88qcQ702.jpg">
+<meta property="og:updated_time" content="2018-04-12T08:57:26.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过SSH协议采集监控数据">
+<meta name="twitter:description" content="通过SSH协议采集监控数据Zabbix中通过SSH协议也可以实现监控目标，通过SSH agent监控方式，需要对服务器进行监控但又不能安装Zabbix agent的环境中非常有用。Zabbix中使用SSh agent时要求libssh2的最低版本是 1.0.0。 SSH agent支持两种身份认证的方式：基于用户名密码的方式和基于秘钥的方式，使用用户名密码的方式不需要任何特殊的配置，添加监控项时需">
+<meta name="twitter:image" content="https://s3.51cto.com/wyfs02/M01/94/43/wKiom1kL7o6CJbSGAAA8oE4ynjA504.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>通过SSH协议采集监控数据</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-04-11</span>
+            </div>
+            
+                <div>
+                    
+                         <a class="tag is-post-tag" href="/tags/zabbix/">zabbix</a>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="通过SSH协议采集监控数据"><a href="#通过SSH协议采集监控数据" class="headerlink" title="通过SSH协议采集监控数据"></a>通过SSH协议采集监控数据</h1><p>Zabbix中通过SSH协议也可以实现监控目标，通过SSH agent监控方式，需要对服务器进行监控但又不能安装Zabbix agent的环境中非常有用。Zabbix中使用SSh agent时要求libssh2的最低版本是 1.0.0。</p>
+<p>SSH agent支持两种身份认证的方式：基于用户名密码的方式和基于秘钥的方式，使用用户名密码的方式不需要任何特殊的配置，添加监控项时需要在页面中输入明文的用户名和密码，因此在实际环境中建议使用基于秘钥的方式，但这个方式需要做些额外的配置。下面我们来看看基于秘钥的方式如何配置的。</p>
+<h2 id="首先，检查zabbix用户的设置，使用下面的命令。"><a href="#首先，检查zabbix用户的设置，使用下面的命令。" class="headerlink" title="首先，检查zabbix用户的设置，使用下面的命令。"></a>首先，检查zabbix用户的设置，使用下面的命令。</h2><p><strong># grep zabbix /etc/passwd</strong></p>
+<p>zabbix:x:996:994:Zabbix Monitoring System:/var/lib/zabbix:/sbin/nologin</p>
+<p>​     可以看到系统中zabbix用户的home目录是/var/lib/zabbix，确认该目录是否存在，如果不存在，使用下面的命令创建目录。</p>
+<p>​     <strong># mkdir –p /var/lib/zabbix/.ssh</strong></p>
+<p>​     <strong># chown –R zabbix:zabbix /var/lib/zabbix</strong></p>
+<p>接下来我们需要修改zabbix-server.conf文件，配置SSH Key文件的存储路径。</p>
+<blockquote>
+<p>vi /etc/zabbix/zabbix-server.conf<br>SSHKeyLocation=/ var/lib/zabbix/.ssh<br>修改完zabbix-server.conf配置文件后重启Zabbixserver。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart zabbix-server</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>现在，我们生成zabbix用户的SSH Key，询问passphrase时直接回车就可以。</p>
+<blockquote>
+<p>sudo -u zabbixssh-keygen -t rsa -b 2048</p>
+</blockquote>
+<p>Generating public/private rsa key pair.</p>
+<p>Enter file in which to save the key (/var/lib/zabbix/.ssh/id_rsa):</p>
+<p>Enter passphrase (empty for no passphrase):</p>
+<p>Enter same passphrase again:</p>
+<p>Your identification has been saved in /var/lib/zabbix/.ssh/id_rsa.</p>
+<p>Your public key has been saved in /var/lib/zabbix/.ssh/id_rsa.pub.</p>
+<p>The key fingerprint is:</p>
+<p>15:3e:d5:61:ed:16:b3:0a:67:9d:35:f0:35:55:0b:7e zabbix@zbxserver</p>
+<p>The key‘s randomart image is:</p>
+<p>+–[ RSA 2048]- —–+</p>
+<p>|          . .+++*|</p>
+<p>|          . o..++*|</p>
+<p>|          +  ..EB|</p>
+<p>|          . o o.+o|</p>
+<p>|         S   + .. |</p>
+<p>|             .   |</p>
+<p>|                 |</p>
+<p>|                 |</p>
+<p>|                 |</p>
+<p>+—————————-+</p>
+<p># ll</p>
+<p>total 8</p>
+<p>-rw——- 1 zabbix zabbix 1675 May 31 13:29 id_rsa</p>
+<p>-rw-r–r– 1 zabbix zabbix 398 May 31 13:29 id_rsa.pub</p>
+<p>接下来拷贝秘钥文件到被监控主机中，假设被监控主机的IP 地址是192.168.10.112。</p>
+<p><strong># sudo -u zabbixssh-copy-id <a href="mailto:root@192.168.10.112" target="_blank" rel="noopener">root@192.168.10.112</a></strong></p>
+<p>The authenticity of host ‘192.168.10.112 (192.168.10.112)‘ can‘t beestablished.</p>
+<p>ECDSA key fingerprint is0d:33:e5:5c:43:c3:5b:c4:da:e4:f0:6d:0c:fb:4a:6e.</p>
+<p>Are you sure you want to continue connecting (yes/no)? yes</p>
+<p>/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), tofilter out any that are already installed</p>
+<p>/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed – if youare prompted now it is to install the new keys</p>
+<p><a href="mailto:root@192.168.10.112" target="_blank" rel="noopener">root@192.168.10.112</a>‘s password:</p>
+<p>Number of key(s) added: 1</p>
+<p>Now try logging into the machine, with:   “ssh ‘<a href="mailto:root@192.168.10.112" target="_blank" rel="noopener">root@192.168.10.112</a>‘“</p>
+<p>and check to make sure that only the key(s) you wanted were added.</p>
+<p>现在我们测试一下能否登录成功。</p>
+<p><strong># sudo -u zabbix ssh <a href="mailto:root@192.168.10.112" target="_blank" rel="noopener">root@192.168.10.112</a></strong></p>
+<p>当完成上面的配置后，就可以创建SSH agent监控方式的监控项了。</p>
+<p>配置SSH agent监控项的步骤：</p>
+<p>1、  创建一个新主机（Configuration –&gt; Host –&gt; Create host）。在主机配置页面的Host标签下添加Agentinterfaces接口配置，如下图3-14所示。</p>
+<p><a href="https://s3.51cto.com/wyfs02/M01/94/43/wKiom1kL7o6CJbSGAAA8oE4ynjA504.jpg" target="_blank" rel="noopener"><img src="https://s3.51cto.com/wyfs02/M01/94/43/wKiom1kL7o6CJbSGAAA8oE4ynjA504.jpg" alt="技术分享"></a></p>
+<p>图 3-14</p>
+<p>2、  在主机中创建新的监控项。</p>
+<ul>
+<li>Name中输入监控项名称，例如Check uname。</li>
+<li>Type中选择SSH agent。</li>
+<li>Key中内容替换成ssh.run[uname]。</li>
+<li>Host interface 中选择agent接口。</li>
+<li>Authentication method中选择Public key。</li>
+<li>User name中填写root ，Public key file中填写id_rsa_pub，Private keyfile中填写 id_rsa。</li>
+<li>Key passphrase留空，如果生成密钥时你输入了passphrase，就需要在这里输入相同的passphrase。</li>
+<li>Executed script中输入uname -a。</li>
+<li>Type of information中选择Text类型。</li>
+<li>其他参数可以保持不变，点击Add按钮保存。</li>
+</ul>
+<p>如下图3—15所示。</p>
+<p><a href="https://s2.51cto.com/wyfs02/M00/94/44/wKiom1kL7p3hNFe5AAEg9a88qcQ702.jpg" target="_blank" rel="noopener"><img src="https://s2.51cto.com/wyfs02/M00/94/44/wKiom1kL7p3hNFe5AAEg9a88qcQ702.jpg" alt="技术分享"></a></p>
+<p>图 3-15</p>
+<p>3、  Monitoring –&gt; Latest data页面查看监控项。</p>
+<p>使用SSH agent监控方式需要注意的是libssh2可能会把可执行脚本的输出截断到32KB，另外在脚本中最好使用命令的全路径。</p>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
