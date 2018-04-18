@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>Ansible | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ansible使用记录ansible命令集：/usr/bin/ansible: # Ansibe AD-Hoc 临时命令执行工具，常用于临时命令的执行/usr/bin/ansible-doc: # Ansible 模块功能查看工具/usr/bin/ansible-galaxy: # 下载/上传优秀代码或Roles模块的官网平台，基于网络的/usr/bin/ansible-playbook: # A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/17/Ansible/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="ansible使用记录ansible命令集：/usr/bin/ansible: # Ansibe AD-Hoc 临时命令执行工具，常用于临时命令的执行/usr/bin/ansible-doc: # Ansible 模块功能查看工具/usr/bin/ansible-galaxy: # 下载/上传优秀代码或Roles模块的官网平台，基于网络的/usr/bin/ansible-playbook: # A">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-18T05:32:45.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ansible">
+<meta name="twitter:description" content="ansible使用记录ansible命令集：/usr/bin/ansible: # Ansibe AD-Hoc 临时命令执行工具，常用于临时命令的执行/usr/bin/ansible-doc: # Ansible 模块功能查看工具/usr/bin/ansible-galaxy: # 下载/上传优秀代码或Roles模块的官网平台，基于网络的/usr/bin/ansible-playbook: # A">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>Ansible</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-04-17</span>
+            </div>
+            
+                <div>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="ansible使用记录"><a href="#ansible使用记录" class="headerlink" title="ansible使用记录"></a>ansible使用记录</h1><h2 id="ansible命令集："><a href="#ansible命令集：" class="headerlink" title="ansible命令集："></a>ansible命令集：</h2><p>/usr/bin/ansible: # Ansibe AD-Hoc 临时命令执行工具，常用于临时命令的执行<br>/usr/bin/ansible-doc: # Ansible 模块功能查看工具<br>/usr/bin/ansible-galaxy: # 下载/上传优秀代码或Roles模块的官网平台，基于网络的<br>/usr/bin/ansible-playbook: # Ansible 定制自动化的任务集编排工具<br>/usr/bin/ansible-pull: # Ansible远程执行命令的工具（使用较少，海量机器时使用，对运维的架构能力要求较高）<br>/usr/bin/ansible-vault: # Ansible 文件加密工具<br>/usr/bin/ansible-console: # Ansible基于Linux Consoble界面可与用户交互的命令执行工具<br>/usr/share/ansible_plugins:Ansible高级自定义插件目录（需要python基础）<br>/etc/ansible/ansible.cfg:配置文件<br>/etc/ansible/hosts:主机清单</p>
+<h2 id="Ansible-配置文件"><a href="#Ansible-配置文件" class="headerlink" title="Ansible 配置文件"></a>Ansible 配置文件</h2><p>　　绝大多数配置保持默认就好<br>1）[defaults]　　<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#inventory      = /etc/ansible/hosts  # 主机列表配置文件</span><br><span class="line">#library       = /usr/share/my_modules/ # 库文件存放目录 </span><br><span class="line">#remote_tmp     = $HOME/.ansible/tmp  # 生成的临时py命令文件存放在远程主机的目录</span><br><span class="line">#local_tmp      = $HOME/.ansible/tmp # 本机的临时命令执行目录</span><br><span class="line">#forks          = 5   # 默认并发数</span><br><span class="line">#poll_interval  = 15   # 默认的线程池</span><br><span class="line">#sudo_user      = root  # 默认sudo 用户</span><br><span class="line">#ask_sudo_pass = True</span><br><span class="line">#ask_pass      = True</span><br><span class="line">#transport      = smart</span><br><span class="line">#remote_port    = 22</span><br><span class="line">#module_lang    = C</span><br><span class="line">#module_set_locale = False</span><br><span class="line"></span><br><span class="line">host_key_checking = False  ### 检查对应服务器的host_key</span><br></pre></td></tr></table></figure></p>
+<p>（2）[privilege_escalation]<br>（3）[paramiko_connection]<br>（4）[ssh_connection]<br>（5）[accelerate]<br>（6）[selinux]<br>（7）[colors]</p>
+<h2 id="Ansible命令使用说明"><a href="#Ansible命令使用说明" class="headerlink" title="Ansible命令使用说明"></a>Ansible命令使用说明</h2><h3 id="ansible"><a href="#ansible" class="headerlink" title="ansible"></a>ansible</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>调用ping模块检测node3主机是否存活（node2,3,4能基于主机名通信，且已做过免密钥通信）　　</span><br><span class="line">[root@node2 ~/.ssh]# ansible node3 -m ping </span><br><span class="line">node3 | success &gt;&gt; &#123;</span><br><span class="line">　　"changed": false, </span><br><span class="line">　　"ping": "pong"　　</span><br><span class="line">&#125;</span><br><span class="line">[root@node2 ~/.ssh]# </span><br><span class="line">root@node2 ~/.ssh]# ansible -h　　</span><br><span class="line">Usage: ansible &lt;host-pattern&gt; [options]</span><br><span class="line">Options:</span><br><span class="line">　　-a MODULE_ARGS, --args=MODULE_ARGS    #模块的参数,如果执行默认COMMAND的模块，即是命令参数,如：“date”,"pwd"等等</span><br><span class="line">　　module arguments    #模块参数</span><br><span class="line">　　--ask-become-pass     ask for privilege escalation password # Ansible su切换用户的时候使用该参数输入密码</span><br><span class="line">　　-k, --ask-pass        ask for SSH password  #登录密码，提示输入SSH密码而不是假设基于密钥的验证</span><br><span class="line">　　--ask-su-pass         ask for su password    #su切换密码</span><br><span class="line">　　-K, --ask-sudo-pass   ask for sudo password  #提示密码使用sudo,sudo表示提权操作</span><br><span class="line">　　--ask-vault-pass      ask for vault password  # ansible-valut 加密文件</span><br><span class="line">　　-B SECONDS, --background=SECONDS     #后台运行超时时间</span><br><span class="line">　　run asynchronously, failing after X seconds</span><br><span class="line">　　(default=N/A)</span><br><span class="line">　　-C, --check           don't make any changes; instead, try to predict some    #只是测试一下会改变什么内容，不会真正去执行;相反,试图预测一些可能发生的变化</span><br><span class="line">　　of the changes that may occur</span><br><span class="line">　　-c CONNECTION, --connection=CONNECTION   连接类型使用。可能的选项是paramiko(SSH),SSH和地方。当地主要是用于crontab或启动。</span><br><span class="line">　　connection type to use (default=smart)</span><br><span class="line">　　-e EXTRA_VARS, --extra-vars=EXTRA_VARS  # 调用外部变量</span><br><span class="line">　　-f FORKS, --forks=FORKS    # Ansible一次命令执行并发的线程数,默认是5</span><br><span class="line">　　specify number of parallel processes to use</span><br><span class="line">　　(default=5)</span><br><span class="line">　　-h, --help            show this help message and exit   #打开帮助文档API</span><br><span class="line">　　-i INVENTORY, --inventory-file=INVENTORY    #指定库存主机文件的路径,默认为/etc/ansible/hosts</span><br><span class="line">　　specify inventory host file</span><br><span class="line">　　(default=/etc/ansible/hosts)</span><br><span class="line">　　-l SUBSET, --limit=SUBSET    #进一步限制所选主机/组模式  --limit=192.168.91.135 只对这个ip执行</span><br><span class="line">　　further limit selected hosts to an additional pattern</span><br><span class="line">　　--list-hosts          outputs a list of matching hosts; does not execute</span><br><span class="line">　　anything else</span><br><span class="line">　　-m MODULE_NAME, --module-name=MODULE_NAME   #执行模块的名字，默认使用 command 模块，所以如果是只执行单一命令可以不用 -m参数</span><br><span class="line">　　module name to execute (default=command)</span><br><span class="line">　　-M MODULE_PATH, --module-path=MODULE_PATH    #要执行的模块的路径，默认为/usr/share/ansible/</span><br><span class="line">　　specify path(s) to module library</span><br><span class="line">　　(default=/usr/share/ansible/)</span><br><span class="line">　　-o, --one-line        condense output      #压缩输出，摘要输出.尝试一切都在一行上输出。</span><br><span class="line">　　-P POLL_INTERVAL, --poll=POLL_INTERVAL    #调查背景工作每隔数秒。需要- b</span><br><span class="line">　　set the poll interval if using -B (default=15)</span><br><span class="line">　　--private-key=PRIVATE_KEY_FILE    #私钥路径，使用这个文件来验证连接</span><br><span class="line">　　use this file to authenticate the connection</span><br><span class="line">　　-S, --su              run operations with su    用 su 命令</span><br><span class="line">　　-R SU_USER, --su-user=SU_USER      #指定SU的用户，默认是root用户</span><br><span class="line">　　run operations with su as this user (default=root)</span><br><span class="line">　　-s, --sudo            run operations with sudo (nopasswd)    </span><br><span class="line">　　-U SUDO_USER, --sudo-user=SUDO_USER    #sudo到哪个用户，默认为 root  </span><br><span class="line">　　desired sudo user (default=root)</span><br><span class="line">　　-T TIMEOUT, --timeout=TIMEOUT    #指定SSH默认超时时间，  默认是10S</span><br><span class="line">　　override the SSH timeout in seconds (default=10)</span><br><span class="line">　　-t TREE, --tree=TREE  log output to this directory    #将日志内容保存在该输出目录,结果保存在一个文件中在每台主机上。</span><br><span class="line">　　-u REMOTE_USER, --user=REMOTE_USER    #远程用户， 默认是root用户</span><br><span class="line">　　connect as this user (default=root)</span><br><span class="line">　　--vault-password-file=VAULT_PASSWORD_FILE  </span><br><span class="line">　　vault password file</span><br><span class="line">　　-v, --verbose         verbose mode (-vvv for more, -vvvv to enable    详细信息</span><br><span class="line">　　connection debugging)</span><br><span class="line">　　--version             show program's version number and exit   #输出ansible的版本</span><br></pre></td></tr></table></figure>
+<h4 id="Ansiblie命令执行过程-（-vvvv）"><a href="#Ansiblie命令执行过程-（-vvvv）" class="headerlink" title="Ansiblie命令执行过程 （-vvvv）"></a>Ansiblie命令执行过程 （-vvvv）</h4><p>加载自己的配置文件 默认/etc/ansible/ansible.cfg<br>加载自己对应的模块文件，如command<br>通过ansible将模块或命令生成对应的临时py文件，并将该 文件传输至远程服务器的<br>　　对应执行用户的家目录的.ansible/tmp/XXX/XXX.PY文件<br>给文件+x执行<br>执行并返回结果<br>删除临时py文件，sleep 0退出</p>
+<h4 id="ansible主机清单的配置"><a href="#ansible主机清单的配置" class="headerlink" title="ansible主机清单的配置"></a>ansible主机清单的配置</h4><p>　　/ect/ansible/hosts,定义方式：</p>
+<blockquote>
+<p>直接指明主机地址或主机名<br>node3　　<br>172.16.47.104<br>定义一个主机组，把主机地址或主机名写进去，然后通过组名来调用这个组<br>[webservers]　　<br>node3<br>node4<br>如果没有使用公钥，想要使用密码，也可以这样写（适用于第一次登陆控制）<br>格式：【主机名】 【主机地址】 【主机密码】  默认是root用户来进行的　　<br>　　[keepalived]<br>　　keepalived1  ansible_ssh_host=192.168.146.136 ansible_ssh_pass=”test”<br>　　keepalived2  ansible_ssh_host=192.168.146.137 ansible_ssh_pass=”test”<br>ansible-doc<br>　　ansible-doc -l :获取模块信息</p>
+</blockquote>
+<h2 id="ansible-doc-s-MOD-NAME-获取指定模块的使用帮助"><a href="#ansible-doc-s-MOD-NAME-获取指定模块的使用帮助" class="headerlink" title="ansible-doc -s MOD_NAME: 获取指定模块的使用帮助"></a>ansible-doc -s MOD_NAME: 获取指定模块的使用帮助</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~]# ansible-doc  -h　　</span><br><span class="line">Usage: ansible-doc [options] [module...]</span><br><span class="line">Show Ansible module documentation     显示Ansible模块文档</span><br><span class="line">Options:</span><br><span class="line">　　--version             show program&apos;s version number and exit    显示ansible-doc的版本号</span><br><span class="line">　　-h, --help            show this help message and exit  显示命令参数API文档</span><br><span class="line">　　-M MODULE_PATH, --module-path=MODULE_PATH   查询模块，--module-path=MODULE_PATH  指定模块的路径</span><br><span class="line">　　Ansible modules/ directory</span><br><span class="line">　　-l, --list            List available modules   显示已存在的所有模块列表</span><br><span class="line">　　-s, --snippet         Show playbook snippet for specified module(s)   显示playbook制定模块的用法</span><br><span class="line">　　-v                    Show version number and exit   显示ansible-doc的版本号</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible模块"><a href="#Ansible模块" class="headerlink" title="Ansible模块"></a>Ansible模块</h2><h3 id="command模块"><a href="#command模块" class="headerlink" title="command模块:"></a>command模块:</h3><p>使用ansible自带模块执行命令 如果要用 &gt; &lt; | &amp; ‘ ‘ 使用shell模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@node2 ~/.ssh]# ansible all -m command -a &quot;ls /root/.ssh&quot;　　</span><br><span class="line">node4 | success | rc=0 &gt;&gt;</span><br><span class="line">authorized_keys</span><br><span class="line">known_hosts</span><br><span class="line">node3 | success | rc=0 &gt;&gt;</span><br><span class="line">authorized_keys</span><br><span class="line">known_hosts</span><br><span class="line">[root@node2 ~/.ssh]#</span><br></pre></td></tr></table></figure>
+<p>相关选项如下：　　<br>creates：一个文件名，当该文件存在，则该命令不执行<br>free_form：要执行的linux指令<br>chdir：在执行指令之前，先切换到该目录<br>removes：一个文件名，当该文件不存在，则该选项不执行<br>executable：切换shell来执行指令，该执行路径必须是一个绝对路径</p>
+<h3 id="shell-模块"><a href="#shell-模块" class="headerlink" title="shell 模块:"></a>shell 模块:</h3><p>调用bash执行命令 类似 cat /tmp/stanley.md | awk -F’|’ ‘{print $1,$2}’ &amp;&gt; /tmp/stanley.txt 这些复杂命令，即使使用shell也会失败，解决办法：写到脚本时，copy到远程，执行，再把需要的结果拉回执行命令的机器（执行Ansible命令的机器往往称为：Master机或者中控机或者堡垒机）。</p>
+<p>　　注意：command和shell模块的核心参数直接为命令本身；而其它模块的参数通常为“key=value”格式；’’</p>
+<h3 id="copy模块："><a href="#copy模块：" class="headerlink" title="copy模块："></a>copy模块：</h3><p>复制本地文件至远程服务器，并且能够改属性等</p>
+<p>直接复制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible  all -m copy -a &quot;src=txt dest=/tmp mode=540&quot;</span><br></pre></td></tr></table></figure>
+<p>生成内容的复制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible  all -m copy -a &quot;content=&apos;hellow&apos; dest=/tmp/test mode=540&quot;</span><br><span class="line">ansible  all -m shell -a &quot;cat /tmp/test mode=540&quot;</span><br></pre></td></tr></table></figure>
+<p>注意：这两种方法是互斥的，即src和content不能同时使用<br>相关选项如下：　　<br>backup：在覆盖之前，将源文件备份，备份文件包含时间信息。有两个选项：yes|no<br>content：用于替代“src”，可以直接设定指定文件的值<br>dest：必选项。要将源文件复制到的远程主机的绝对路径，如果源文件是一个目录，那么该路径也必须是个目录<br>directory_mode：递归设定目录的权限，默认为系统默认权限<br>force：如果目标主机包含该文件，但内容不同，如果设置为yes，则强制覆盖，如果为no，则只有当目标主机的目标位置不存在该文件时，才复制。默认为yes<br>others：所有的file模块里的选项都可以在这里使用<br>src：被复制到远程主机的本地文件，可以是绝对路径，也可以是相对路径。如果路径是一个目录，它将递归复制。在这种情况下，如果路径使用“/”来结尾，则只复制目录里的内容，如果没有使用“/”来结尾，则包含目录在内的整个内容全部复制，类似于rsync。</p>
+<h3 id="file模块："><a href="#file模块：" class="headerlink" title="file模块："></a>file模块：</h3><p>设置文件属性</p>
+<p>-a “path=PATH state=directory”  # 创建目录　　</p>
+<figure class="highlight plain"><figcaption><span>~]# ansible all -m file -a "path</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>-a “path=PATH  src=FILE  state=link”    #创建链接文件<br>　　<br>[root@node2 ~]# ansible all -m file -a “path=/root/haha src=/tmp/hehe state=link” </p>
+<p>-a “path=PATH  state=absent”    #删除文件<br>[root@node2 ~]# ansible all -m file -a “path=/root/haha state=absent”</p>
+<p>　　相关选项如下：<br>force：需要在两种情况下强制创建软链接，一种是源文件不存在，但之后会建立的情况下；另一种是目标软链接已存在，需要先取消之前的软链，然后创建新的软链，有两个选项：yes|no　　</p>
+<p>group：定义文件/目录的属组<br>mode：定义文件/目录的权限<br>owner：定义文件/目录的属主<br>path：必选项，定义文件/目录的路径<br>recurse：递归设置文件的属性，只对目录有效<br>　　<br>src：被链接的源文件路径，只应用于state=link的情况<br>　　<br>dest：被链接到的路径，只应用于state=link的情况<br>　　<br>state：<br>　　directory：如果目录不存在，就创建目录<br>　　file：即使文件不存在，也不会被创建<br>　　link：创建软链接<br>　　hard：创建硬链接<br>　　touch：如果文件不存在，则会创建一个新的文件，如果文件或目录已存在，则更新其最后修改时间<br>　　absent：删除目录、文件或者取消链接文件
+　　</p>
+<p>　　fetch模块： 从远程服务器拉取文件至本机，只能fetch文件，不能fetch目录,如果拉目录，先tar/zip 再拉到本机即可<br>　　<br>[root@node2 ~]# ansible all -m fetch -a “src=/tmp/txt dest=/root/txt.txt”<br>　　cron模块: 管理cron计划任务<br>　　<br>[root@node2 ~]# ansible all -m corn -a “minute=’*/5’ job=’/usr/sbin/ntpdate 172.16.0.1 &amp;&gt; /dev/null’ name=’Synctime’” #每5分钟同步一下时间<br>　　<br>[root@node2 ~]# ansible all -m corn -a “state=absent name=’Synctime’” #删除上面的定时任务<br>　　相关选项如下：
+　　</p>
+<ul>
+<li>a “”: 设置管理节点生成定时任务　　<br>action: cron</li>
+</ul>
+<p>backup=    # 如果设置，创建一个crontab备份<br>　　<br>cron_file=          #如果指定, 使用这个文件cron.d，而不是单个用户crontab<br>　　<br>day=       # 日应该运行的工作( 1-31, <em>, </em>/2, etc )<br>　　<br>hour=      # 小时 ( 0-23, <em>, </em>/2, etc )<br>　　<br>job=       #指明运行的命令是什么<br>　　<br>minute=    #分钟( 0-59, <em>, </em>/2, etc )<br>　　<br>month=     # 月( 1-12, <em>, </em>/2, etc )<br>　　<br>name=     #定时任务描述<br>　　<br>reboot    # 任务在重启时运行，不建议使用，建议使用special_time<br>　　<br>special_time       # 特殊的时间范围，参数：reboot（重启时）,annually（每年）,monthly（每月）,weekly（每周）,daily（每天）,hourly（每小时）
+　　</p>
+<p>state        #指定状态，prsent表示添加定时任务，也是默认设置，absent表示删除定时任务
+　　</p>
+<p>user         # 以哪个用户的身份执行<br>　　<br>weekday      # 周 ( 0-6 for Sunday-Saturday, *, etc )
+　　</p>
+<p>　　yum模块：yum安装软件，也有apt,zypper
+　　</p>
+<p>[root@node2 ~]# ansible all -m yum -a “name=httpd state=latest” #安装httpd包　　</p>
+<p>　　相关选项如下：
+　　</p>
+<p>conf_file         #设定远程yum安装时所依赖的配置文件。如配置文件没有在默认的位置。　　<br>disable_gpg_check    #是否禁止GPG checking，只用于<code>present&#39; or</code>latest’。<br>　　<br>disablerepo   #临时禁止使用yum库。 只用于安装或更新时。<br>　　<br>enablerepo    #临时使用的yum库。只用于安装或更新时。<br>　　<br>name=            #所安装的包的名称<br>　　<br>state               #present安装， latest安装最新的, absent 卸载软件。<br>　　<br>update_cache  #强制更新yum的缓存。
+　　</p>
+<p>　　service模块: 服务程序管理
+　　</p>
+<p>[root@node2 ~]# ansible all -m service -a “name=httpd state=restarted”  #重启httpd　　<br>[root@node2 ~]# ansible all -m service -a “name=httpd  enabled=true”    #开机启动
+　　</p>
+<p>　　相关选项如下：
+　　</p>
+<p>arguments         #命令行提供额外的参数　　<br>enabled           #设置开机启动。<br>　　<br>name=             #服务名称<br>　　<br>runlevel          #开机启动的级别，一般不用指定。<br>　　<br>sleep             #在重启服务的过程中，是否等待。如在服务关闭以后等待2秒再启动。</p>
+<p>state     #started启动服务， stopped停止服务， restarted重启服务，&gt;　　</p>
+<p>　　group模块: 组管理
+　　</p>
+<p>[root@node2 ~]# ansible-doc -s group　　</p>
+<ul>
+<li>name: 添加或删除组</li>
+</ul>
+<p>action: group<br>　　<br>gid       # 设置组的GID号<br>　　<br>name=     # 管理组的名称<br>　　<br>state     # 指定组状态，默认为创建，设置值为absent为删除<br>　　<br>system    # 设置值为yes，表示为创建系统组
+　　</p>
+<p>　　User模块:用户管理
+　　</p>
+<p>-a “”　　<br>action: user<br>　　<br>comment    # 用户的描述信息<br>　　<br>createhom  # 是否创建家目录<br>　　<br>force      # 在使用<code>state=absent&#39;是, 行为与</code>userdel –force’一致.<br>　　<br>group      # 指定基本组<br>　　<br>groups     # 指定附加组，如果指定为(‘groups=’)表示删除所有组<br>　　<br>home       # 指定用户家目录<br>　　<br>login_class     #可以设置用户的登录类 FreeBSD, OpenBSD and NetBSD系统.<br>　　<br>move_home       # 如果设置为<code>home=&#39;时, 试图将用户主目录移动到指定的目录
+　　
+name=           # 指定用户名
+　　
+non_unique      # 该选项允许改变非唯一的用户ID值
+　　
+password        # 指定用户密码
+　　
+remove          # 在使用</code>state=absent’时, 行为是与 `userdel –remove’一致.<br>　　<br>shell           # 指定默认shell<br>　　<br>state           #设置帐号状态，不指定为创建，指定值为absent表示删除<br>　　<br>system          # 当创建一个用户，设置这个用户是系统用户。这个设置不能更改现有用户。<br>　　<br>uid             #指定用户的uid<br>update_password  # 更新用户密码<br>expires         #指明密码的过期时间<br>ansible all -m user -a ‘name=magedu home=/tmp/magedu/ shell=/bin/bash uid=2000 comment=”test user” group=root’
+　　</p>
+<p>　　ping 模块： 检测主机存活<br>　　setup模块：获取指定主机的facts。<br>　　<br>facts就是变量，内建变量 。每个主机的各种信息，cpu颗数、内存大小等。会存在facts中的某个变量中。调用后返回很多对应主机的信息，在后面的操作中可以根据不同的信息来做不同的操作。如redhat系列用yum安装，而debian系列用apt来安装软件。
+　　</p>
+<p>ansible node3 -m setup　　</p>
+<p>　　selinux模块： 管理selinux<br>　　<br>关闭selinux
+　　</p>
+<p>ansible all -m selinux -a ‘state=disabled’　　</p>
+<p>conf     #指定应用selinux的配置文件。　　<br>state=enforcing|permissive|disabled      #对应于selinux配置文件的SELINUX。<br>　　<br>policy=targeted|minimum|mls     #对应于selinux配置文件的SELINUXTYPE
+　　</p>
+<p>　　script模块：发送脚本到各被管理节点，并执行;不需要参数
+　　</p>
+<p>ansible all -m script -a ‘test.sh’ #直接在-a 后面指定脚本即可　　</p>
+<p>　　未完待续……<br>　　最后打个广告，Stanley老师的Ansible权威指南，你，值得拥有</p>
+<p>DSC0007.png (64.81 KB, 下载次数: 0)</p>
+<p>下载附件  保存到相册</p>
+<p>2017-6-9 08:59 上传</p>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>

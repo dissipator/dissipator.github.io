@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>OCi8 on php | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="php with OCI8使用php的常见问题是：编译php时忘记添加某扩展，后来想添加扩展，但是因为安装php后又装了一些东西如PEAR等，不想删除目录重装，那么此时就需要自己重新增加某模块支持了,Linux操作系统下可以用phpize给PHP动态添加扩展.下面就以扩展模块 oci8为例(php连接oracle数据库需要改扩展支持)做简单的说明  下载Oracle客户端程序包，其中包含OCI、O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OCi8 on php">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/13/OCi8-on-php/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="php with OCI8使用php的常见问题是：编译php时忘记添加某扩展，后来想添加扩展，但是因为安装php后又装了一些东西如PEAR等，不想删除目录重装，那么此时就需要自己重新增加某模块支持了,Linux操作系统下可以用phpize给PHP动态添加扩展.下面就以扩展模块 oci8为例(php连接oracle数据库需要改扩展支持)做简单的说明  下载Oracle客户端程序包，其中包含OCI、O">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-16T05:52:30.838Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OCi8 on php">
+<meta name="twitter:description" content="php with OCI8使用php的常见问题是：编译php时忘记添加某扩展，后来想添加扩展，但是因为安装php后又装了一些东西如PEAR等，不想删除目录重装，那么此时就需要自己重新增加某模块支持了,Linux操作系统下可以用phpize给PHP动态添加扩展.下面就以扩展模块 oci8为例(php连接oracle数据库需要改扩展支持)做简单的说明  下载Oracle客户端程序包，其中包含OCI、O">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>OCi8 on php</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-04-13</span>
+            </div>
+            
+                <div>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="php-with-OCI8"><a href="#php-with-OCI8" class="headerlink" title="php with OCI8"></a>php with OCI8</h1><p>使用php的常见问题是：编译php时忘记添加某扩展，后来想添加扩展，但是因为安装php后又装了一些东西如PEAR等，不想删除目录重装，那么此时就需要自己重新增加某模块支持了,Linux操作系统下可以用phpize给PHP动态添加扩展.下面就以扩展模块 oci8为例(php连接oracle数据库需要改扩展支持)做简单的说明</p>
+<ol>
+<li><p>下载Oracle客户端程序包，其中包含OCI、OCCI和JDBC-OCI等相关文件</p>
+<p>1.1 根据Linux系统选择对应的软件,以32位系统为例,所以下载如下文件:</p>
+<p>oracle-instantclient11.2-basic-11.2.0.3.0-1.i386.rpm</p>
+<p>oracle-instantclient11.2-devel-11.2.0.3.0-1.i386.rpm</p>
+<p>1.2 下载地址: <a href="http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html</a> (Oracle官网下载需要注册用户)</p>
+</li>
+<li><p>安装oracle客户端,运行以下命令即可:</p>
+<p> rpm -ivh oracle-instantclient11.2-basic-11.2.0.3.0.i386.rpm</p>
+<p> rpm -ivh oracle-instantclient11.2-devel-11.2.0.3.0.i386.rpm</p>
+</li>
+<li><p>安装oci8 php扩展</p>
+<p>3.1  下载oci8-1.4.10.tgz</p>
+<p>下载地址:<a href="http://pecl.php.net/get/oci8-1.4.10.tgz" target="_blank" rel="noopener">http://pecl.php.net/get/oci8-1.4.10.tgz</a></p>
+<p>3.2 把下载文件上传至linux服务器,并进行解压</p>
+<p>命令:tar zxvf oci8-1.4.10.tgz#解压</p>
+<p>3.3  转到解压目录</p>
+<p>命令:cd oci8-1.4.10</p>
+<p>3.4  使用phpize准备 PHP 外挂模块的编译环境，会根据指定的环境变量生成编译时需要的makefile，phpize是属于php-devel的内容，所以centos下只要运行yum install php-devel进行安装即可 (注意:/usr/local/php/bin/phpize 为我的php目录,不同则需改之;如果是64位的系统，client改成client64)</p>
+<p>/usr/local/php/bin/phpize CFLAGS=”-I/usr/lib/oracle/11.1/client” CXXFLAGS=”-I/usr/lib/oracle/11.1/client”</p>
+<p>3.5  编译，安装</p>
+<p> 要有与现有php完全相同的php压缩包。我用的是php-5.5.3.tar.gz。展开后进入里面的ext/oci8目录下,</p>
+<p> 然后执行命令: /usr/local/php/bin/phpize #这是一个可执行的文本文件，要确保它在系统中</p>
+<p> 会发现当前目录下多了一些configure文件，</p>
+<p> 如果没报错，则运行命令;</p>
+<p> ./configure –with-php-config=/usr/local/php/bin/php-config –with-oci8=/usr/lib/oracle/11.1/client</p>
+<p> 注意要先确保/usr/local/php/bin/php-config存在。如果你的php安装路径不是默认的，要改。</p>
+<p> 再运行以下命令 ，然后它告诉你一个目录,你把该目录下的oci8.so拷贝到你php.ini中的extension_dir指向的目录中</p>
+<p> make<br> make install<br> 1). 需要强调的是make的时候会报错，显示各种找不到库文件，需要对makefile文件进行修改加入oralce的运行库地址</p>
+<p> 打开makefile，寻找INCLUDE，形式如下：</p>
+<p> INCLUDES = -I/usr/local/php/include/php -I/usr/include/oracle/10.2.0.3/client</p>
+<p> 然后在末尾加上=”-I/usr/lib/oracle/11.1/client，然后重新make就会成功了。</p>
+<p>2) 编译的时候会出现错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:56:17: 错误：oci.h：没有那个文件或目录</span><br><span class="line">In file included from /data/lnmp1.4c/oci8-1.4.10/oci8.c:58:</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:113: 错误：expected specifier-qualifier-list before ‘OCIEnv’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:122: 错误：expected specifier-qualifier-list before ‘OCIEnv’</span><br><span class="line">In file included from /data/lnmp1.4c/oci8-1.4.10/oci8.c:58:</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:152: 错误：expected specifier-qualifier-list before ‘dvoid’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:165: 错误：expected specifier-qualifier-list before ‘ub4’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:172: 错误：expected specifier-qualifier-list before ‘OCIType’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:182: 错误：expected specifier-qualifier-list before ‘text’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:191: 错误：expected specifier-qualifier-list before ‘sword’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:207: 错误：expected specifier-qualifier-list before ‘OCIBind’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:230: 错误：expected specifier-qualifier-list before ‘OCIDefine’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:377: 错误：expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘php_oci_error’</span><br><span class="line">/data/lnmp1.4c/oci8-1.4.10/php_oci8_int.h:378: 错误：expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘php_oci_fetch_errmsg’</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<p>error: oci8_dtrace_gen.h: No such file or directory</p>
+<p>如果需要 DTRACE:</p>
+<p>yum install systemtap-sdt-devel<br>export PHP_DTRACE=yes<br>如果不需要 DTRACE:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modify the file &apos;php_oci8_int.h&apos;, change the 48th line </span><br><span class="line"></span><br><span class="line">#include &quot;oci8_dtrace_gen.h&quot; to #undef HAVE_OCI8_DTRACE</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>修改PHP.ini（/usr/local/php/etc/php.ini）
+
+在extension_dir = &quot;/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/&quot;后增加一行：
+
+extension = &quot;oci8.so&quot;
+
+注意:要确保/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/ 该目录下有oci8.so文件
+</code></pre><p>  ​</p>
+<ol>
+<li><p>重启apache,让oci生效</p>
+</li>
+<li><p>在web目录下创建phpinfo.php文件在其中输入一下内容，并通过web访问</p>
+</li>
+</ol>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>

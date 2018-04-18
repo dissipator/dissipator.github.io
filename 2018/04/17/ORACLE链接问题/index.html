@@ -6,20 +6,19 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   
-  <title>ORACLE11G 链接缓慢问题排查 | Lucas</title>
+  <title>ORACLE链接问题 | Lucas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题描述： 服务器centos7,客服端任意 本地使用sqlplus / 连接很快，sqlplus xxx/xxx@127.0.0.1/sid 很慢 windows客服端在创建链接后也很慢  问题排查 tnsping  没有延迟 11G用户验证问题（只要有登陆错误，就会有延迟累计）－－－－－－不是 监听文件配置问题　－－－－－－不是 日志文件过大　－－－－－－－不是 机器名在监听文件和网络上的名字">
-<meta name="keywords" content="linux,ORACLE">
+  <meta name="description" content="ORACLE链接问题找不到动态库ldd sqlplusecho $LD_LIBRARY_PATHexport $LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib ORA-21561: OID generation failed修改/etc/hosts文件，追加本机map，否则会报””错误 #vi /etc/hosts 追加如下信息： 192.168.1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ORACLE11G 链接缓慢问题排查">
-<meta property="og:url" content="https://dissipator.github.io/2018/04/08/ORACLE11G-链接缓慢问题排查/index.html">
+<meta property="og:title" content="ORACLE链接问题">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/17/ORACLE链接问题/index.html">
 <meta property="og:site_name" content="Lucas">
-<meta property="og:description" content="问题描述： 服务器centos7,客服端任意 本地使用sqlplus / 连接很快，sqlplus xxx/xxx@127.0.0.1/sid 很慢 windows客服端在创建链接后也很慢  问题排查 tnsping  没有延迟 11G用户验证问题（只要有登陆错误，就会有延迟累计）－－－－－－不是 监听文件配置问题　－－－－－－不是 日志文件过大　－－－－－－－不是 机器名在监听文件和网络上的名字">
+<meta property="og:description" content="ORACLE链接问题找不到动态库ldd sqlplusecho $LD_LIBRARY_PATHexport $LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib ORA-21561: OID generation failed修改/etc/hosts文件，追加本机map，否则会报””错误 #vi /etc/hosts 追加如下信息： 192.168.1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-18T08:38:57.971Z">
+<meta property="og:updated_time" content="2018-04-18T06:47:22.229Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ORACLE11G 链接缓慢问题排查">
-<meta name="twitter:description" content="问题描述： 服务器centos7,客服端任意 本地使用sqlplus / 连接很快，sqlplus xxx/xxx@127.0.0.1/sid 很慢 windows客服端在创建链接后也很慢  问题排查 tnsping  没有延迟 11G用户验证问题（只要有登陆错误，就会有延迟累计）－－－－－－不是 监听文件配置问题　－－－－－－不是 日志文件过大　－－－－－－－不是 机器名在监听文件和网络上的名字">
+<meta name="twitter:title" content="ORACLE链接问题">
+<meta name="twitter:description" content="ORACLE链接问题找不到动态库ldd sqlplusecho $LD_LIBRARY_PATHexport $LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib ORA-21561: OID generation failed修改/etc/hosts文件，追加本机map，否则会报””错误 #vi /etc/hosts 追加如下信息： 192.168.1">
   
     <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
   
@@ -137,44 +136,27 @@
     <div class="container post-box">
         <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
             <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
-                <strong>ORACLE11G 链接缓慢问题排查</strong>
+                <strong>ORACLE链接问题</strong>
             </h1>
             
             <div class="is-flex align-center">
                 <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
                 <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
-                <span class="post-date sub-title">at: 2018-04-08</span>
+                <span class="post-date sub-title">at: 2018-04-17</span>
             </div>
             
                 <div>
-                    
-                         <a class="tag is-post-tag" href="/tags/linux-ORACLE/">linux,ORACLE</a>
                     
                 </div>
             
         </div>
         <div class="content" style="overflow: auto">
-            <h1 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h1><ol>
-<li>服务器centos7,客服端任意</li>
-<li>本地使用sqlplus / 连接很快，sqlplus <a href="mailto:xxx/xxx@127.0.0.1" target="_blank" rel="noopener">xxx/xxx@127.0.0.1</a>/sid 很慢</li>
-<li>windows客服端在创建链接后也很慢</li>
-</ol>
-<h1 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h1><ol>
-<li>tnsping  没有延迟</li>
-<li>11G用户验证问题（只要有登陆错误，就会有延迟累计）－－－－－－不是</li>
-<li>监听文件配置问题　－－－－－－不是</li>
-<li>日志文件过大　－－－－－－－不是</li>
-<li><p>机器名在监听文件和网络上的名字不一致－－－－－－－是</p>
-<ol>
-<li>/etc/hosts</li>
-<li>/etc/hostname</li>
-<li>$ORACLE_HOME/network/admin/tnsname.ora</li>
-<li><p>/etc/sysconf/network</p>
-<p>​</p>
-</li>
-</ol>
-</li>
-</ol>
+            <h1 id="ORACLE链接问题"><a href="#ORACLE链接问题" class="headerlink" title="ORACLE链接问题"></a>ORACLE链接问题</h1><h2 id="找不到动态库"><a href="#找不到动态库" class="headerlink" title="找不到动态库"></a>找不到动态库</h2><p>ldd sqlplus<br>echo $LD_LIBRARY_PATH<br>export $LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</p>
+<h2 id="ORA-21561-OID-generation-failed"><a href="#ORA-21561-OID-generation-failed" class="headerlink" title="ORA-21561: OID generation failed"></a>ORA-21561: OID generation failed</h2><p>修改/etc/hosts文件，追加本机map，否则会报””错误</p>
+<p>#vi /etc/hosts</p>
+<p>追加如下信息：</p>
+<p>192.168.1.171 centos62</p>
+<p>其中centos62为本机主机名，可以通过hostname命令查看</p>
 
         </div>
         <div class="post-reply">
