@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>awk sort.. | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="sort、uniq、awk123456789101112131415161718192021#!/bin/bashSECURE_FILE=/var/log/secureIPS=`tail -n 1000 $SECURE_FILE| grep &quot;Failed password &quot;| egrep -o &quot;([0-9]&amp;#123;1,3&amp;#125;\.)&amp;#123;3&amp;#125;[0-9]&amp;#123;1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awk sort..">
+<meta property="og:url" content="https://dissipator.github.io/2018/04/24/awk-sort/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="sort、uniq、awk123456789101112131415161718192021#!/bin/bashSECURE_FILE=/var/log/secureIPS=`tail -n 1000 $SECURE_FILE| grep &quot;Failed password &quot;| egrep -o &quot;([0-9]&amp;#123;1,3&amp;#125;\.)&amp;#123;3&amp;#125;[0-9]&amp;#123;1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-26T04:52:32.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="awk sort..">
+<meta name="twitter:description" content="sort、uniq、awk123456789101112131415161718192021#!/bin/bashSECURE_FILE=/var/log/secureIPS=`tail -n 1000 $SECURE_FILE| grep &quot;Failed password &quot;| egrep -o &quot;([0-9]&amp;#123;1,3&amp;#125;\.)&amp;#123;3&amp;#125;[0-9]&amp;#123;1">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>awk sort..</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-04-24</span>
+            </div>
+            
+                <div>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="sort、uniq、awk"><a href="#sort、uniq、awk" class="headerlink" title="sort、uniq、awk"></a>sort、uniq、awk</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">SECURE_FILE=/var/log/secure</span><br><span class="line">IPS=`tail -n 1000 $SECURE_FILE| grep "Failed password "| egrep -o "([0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;"| sort -nr|uniq -c| awk '$1&gt;10&#123;print $2&#125;'`</span><br><span class="line">IPTABLE_CONF=/etc/sysconfig/iptables</span><br><span class="line">cat &lt;&lt;EOF</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">for ip in echo $IPS</span><br><span class="line">do</span><br><span class="line">        cat $IPTABLE_CONF | grep $ip&gt;/dev/null</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">        sed -e "/lo/a -A INPUT -s $ip -m state --state NEW -m tcp -p tcp --dport 22 -j DROP" $IPTABLE_CONF</span><br><span class="line">else</span><br><span class="line">        echo "$ip is in iptables-------do nothing"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+<h1 id="shell在手分析服务器日志不愁😝"><a href="#shell在手分析服务器日志不愁😝" class="headerlink" title="shell在手分析服务器日志不愁😝"></a><a href="https://segmentfault.com/a/1190000009745139" target="_blank" rel="noopener">shell在手分析服务器日志不愁😝</a></h1><p>1、查看有多少个IP访问：</p>
+<p>awk ‘{print $1}’ log_file|sort|uniq|wc -l</p>
+<p>2、查看某一个页面被访问的次数：</p>
+<p>grep “/index.php” log_file | wc -l</p>
+<p>3、查看每一个IP访问了多少个页面：</p>
+<p>awk ‘{++S[$1]} END {for (a in S) print a,S[a]}’ log_file &gt; log.txt</p>
+<p>sort -n -t ‘ ‘ -k 2 log.txt 配合sort进一步排序</p>
+<p>4、将每个IP访问的页面数进行从小到大排序：</p>
+<p>awk ‘{++S[$1]} END {for (a in S) print S[a],a}’ log_file | sort -n</p>
+<p>5、查看某一个IP访问了哪些页面：</p>
+<p>grep ^111.111.111.111 log_file| awk ‘{print $1,$7}’</p>
+<p>6、去掉搜索引擎统计的页面：</p>
+<p>awk ‘{print $12,$1}’ log_file | grep ^\”Mozilla | awk ‘{print $2}’ |sort | uniq | wc -l</p>
+<p>7、查看2015年8月16日14时这一个小时内有多少IP访问:</p>
+<p>awk ‘{print $4,$1}’ log_file | grep 16/Aug/2015:14 | awk ‘{print $2}’| sort | uniq | wc -l</p>
+<p>8、查看访问前十个ip地址</p>
+<p>awk ‘{print $1}’ |sort|uniq -c|sort -nr |head -10 access_log</p>
+<p>uniq -c 相当于分组统计并把统计数放在最前面<br>cat access.log|awk ‘{print $1}’|sort|uniq -c|sort -nr|head -10</p>
+<p>cat access.log|awk ‘{counts[$(11)]+=1}; END {for(url in counts) print counts[url], url}</p>
+<p>9、访问次数最多的10个文件或页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat log_file|awk &apos;&#123;print 11&#125;&apos;|sort|uniq -c|sort -nr | head -10cat log_file|awk &apos;&#123;print 11&#125;&apos;|sort|uniq -c|sort -nr|head -20</span><br><span class="line">awk &apos;&#123;print $1&#125;&apos; log_file |sort -n -r |uniq -c | sort -n -r | head -20</span><br></pre></td></tr></table></figure>
+<p>访问量最大的前20个ip</p>
+<p>10、通过子域名访问次数，依据referer来计算，稍有不准</p>
+<blockquote>
+<p>cat access.log | awk ‘{print $11}’ | sed -e ‘ s/http:\/\///‘ -e ‘ s/\/.*//‘ | sort | uniq -c | sort -rn | head -20</p>
+</blockquote>
+<p>11、列出传输大小最大的几个文件</p>
+<blockquote>
+<p>cat <a href="http://www.access.log" target="_blank" rel="noopener">www.access.log</a> |awk ‘($7~/.php/){print $10 “ “ $1 “ “ $4 “ “ $7}’|sort -nr|head -100</p>
+</blockquote>
+<p>12、列出输出大于200000byte(约200kb)的页面以及对应页面发生次数</p>
+<blockquote>
+<p>cat <a href="http://www.access.log" target="_blank" rel="noopener">www.access.log</a> |awk ‘($10 &gt; 200000 &amp;&amp; $7~/.php/){print $7}’|sort -n|uniq -c|sort -nr|head -100</p>
+</blockquote>
+<p>13、如果日志最后一列记录的是页面文件传输时间，则有列出到客户端最耗时的页面</p>
+<p>cat <a href="http://www.access.log" target="_blank" rel="noopener">www.access.log</a> |awk ‘($7~/.php/){print $NF “ “ $1 “ “ $4 “ “ $7}’|sort -nr|head -100</p>
+<p>14、列出最最耗时的页面(超过60秒的)的以及对应页面发生次数</p>
+<p>cat <a href="http://www.access.log" target="_blank" rel="noopener">www.access.log</a> |awk ‘($NF &gt; 60 &amp;&amp; $7~/.php/){print $7}’|sort -n|uniq -c|sort -nr|head -100</p>
+<p>15、列出传输时间超过 30 秒的文件</p>
+<p>cat <a href="http://www.access.log" target="_blank" rel="noopener">www.access.log</a> |awk ‘($NF &gt; 30){print $7}’|sort -n|uniq -c|sort -nr|head -20</p>
+<p>16、列出当前服务器每一进程运行的数量，倒序排列</p>
+<p>ps -ef | awk -F ‘ ‘ ‘{print $8 “ “ $9}’ |sort | uniq -c |sort -nr |head -20</p>
+<p>17、查看apache当前并发访问数</p>
+<p>对比httpd.conf中MaxClients的数字差距多少<br>netstat -an | grep ESTABLISHED | wc -l</p>
+<p>18、可以使用如下参数查看数据</p>
+<p>ps -ef|grep httpd|wc -l</p>
+<p>1388<br>统计httpd进程数，连个请求会启动一个进程，使用于Apache服务器。<br>表示Apache能够处理1388个并发请求，这个值Apache可根据负载情况自动调整</p>
+<p>netstat -nat|grep -i “80”|wc -l</p>
+<p>4341<br>netstat -an会打印系统当前网络链接状态，而grep -i “80”是用来提取与80端口有关的连接的，wc -l进行连接数统计。<br>最终返回的数字就是当前所有80端口的请求总数</p>
+<p>netstat -na|grep ESTABLISHED|wc -l</p>
+<p>376<br>netstat -an会打印系统当前网络链接状态，而grep ESTABLISHED 提取出已建立连接的信息。 然后wc -l统计<br>最终返回的数字就是当前所有80端口的已建立连接的总数。</p>
+<p>netstat -nat||grep ESTABLISHED|wc</p>
+<p>可查看所有建立连接的详细记录</p>
+<p>19、输出每个ip的连接数，以及总的各个状态的连接数<br>netstat -n | awk ‘/^tcp/ {n=split($(NF-1),array,”:”);if(n&lt;=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf(“%-20s %s\n”, a, S[a]);++I}printf(“%-20s %s\n”,”TOTAL_IP”,I);for(a in s) printf(“%-20s %s\n”,a, s[a]);printf(“%-20s %s\n”,”TOTAL_LINK”,N);}’</p>
+<p>20、其他的收集</p>
+<p>分析日志文件下 2012-05-04 访问页面最高 的前20个 URL 并排序</p>
+<p>cat access.log |grep ‘04/May/2012’| awk ‘{print $11}’|sort|uniq -c|sort -nr|head -20</p>
+<p>查询受访问页面的URL地址中 含有 <a href="http://www.abc.com" target="_blank" rel="noopener">www.abc.com</a> 网址的 IP 地址</p>
+<p>cat access_log | awk ‘($11~/\<a href="http://www.abc.com/){print" target="_blank" rel="noopener">www.abc.com/){print</a> $1}’|sort|uniq -c|sort -nr</p>
+<p>获取访问最高的10个IP地址 同时也可以按时间来查询</p>
+<p>cat linewow-access.log|awk ‘{print $1}’|sort|uniq -c|sort -nr|head -10</p>
+<p>时间段查询日志时间段的情况</p>
+<p>cat log_file | egrep ‘15/Aug/2015|16/Aug/2015’ |awk ‘{print $1}’|sort|uniq -c|sort -nr|head -10</p>
+<p>分析2015/8/15 到 2015/8/16 访问”/index.php?g=Member&amp;m=Public&amp;a=sendValidCode”的IP倒序排列</p>
+<p>cat log_file | egrep ‘15/Aug/2015|16/Aug/2015’ | awk ‘{if($7 == “/index.php?g=Member&amp;m=Public&amp;a=sendValidCode”) print $1,$7}’|sort|uniq -c|sort -nr</p>
+<p>($7~/.php/) $7里面包含.php的就输出,本句的意思是最耗时的一百个PHP页面</p>
+<p>cat log_file |awk ‘($7~/.php/){print $NF “ “ $1 “ “ $4 “ “ $7}’|sort -nr|head -100</p>
+<p>列出最最耗时的页面(超过60秒的)的以及对应页面发生次数</p>
+<p>cat access.log |awk ‘($NF &gt; 60 &amp;&amp; $7~/.php/){print $7}’|sort -n|uniq -c|sort -nr|head -100</p>
+<p>统计网站流量（G)</p>
+<p>cat access.log |awk ‘{sum+=$10} END {print sum/1024/1024/1024}’</p>
+<p>统计404的连接</p>
+<p>awk ‘($9 ~/404/)’ access.log | awk ‘{print $9,$7}’ | sort</p>
+<p>统计http status</p>
+<p>cat access.log |awk ‘{counts[$(9)]+=1}; END {for(code in counts) print code, counts[code]}’<br>cat access.log |awk ‘{print $9}’|sort|uniq -c|sort -rn</p>
+<p>每秒并发</p>
+<p>watch “awk ‘{if($9~/200|30|404/)COUNT[$4]++}END{for( a in COUNT) print a,COUNT[a]}’ log_file|sort -k 2 -nr|head -n10”</p>
+<p>带宽统计</p>
+<p>cat apache.log |awk ‘{if($7~/GET/) count++}END{print “client_request=”count}’<br>cat apache.log |awk ‘{BYTE+=$11}END{print “client_kbyte_out=”BYTE/1024”KB”}’</p>
+<p>找出某天访问次数最多的10个IP</p>
+<p>cat /tmp/access.log | grep “20/Mar/2011” |awk ‘{print $3}’|sort |uniq -c|sort -nr|head</p>
+<p>当天ip连接数最高的ip都在干些什么</p>
+<p>cat access.log | grep “10.0.21.17” | awk ‘{print $8}’ | sort | uniq -c | sort -nr | head -n 10</p>
+<p>小时单位里ip连接数最多的10个时段</p>
+<p>awk -vFS=”[:]” ‘{gsub(“-.*”,””,$1);num[$2” “$1]++}END{for(i in num)print i,num[i]}’ log_file | sort -n -k 3 -r | head -10</p>
+<p>找出访问次数最多的几个分钟</p>
+<p>awk ‘{print $1}’ access.log | grep “20/Mar/2011” |cut -c 14-18|sort|uniq -c|sort -nr|head<br>取5分钟日志<br>if [ $DATE_MINUTE != $DATE_END_MINUTE ] ;then #则判断开始时间戳与结束时间戳是否相等<br>START_LINE=sed -n “/$DATE_MINUTE/=” $APACHE_LOG|head -n1 #如果不相等，则取出开始时间戳的行号，与结束时间戳的行号</p>
+<p>查看tcp的链接状态</p>
+<p>netstat -nat |awk ‘{print $6}’|sort|uniq -c|sort -rn </p>
+<p>netstat -n | awk ‘/^tcp/ {++S[$NF]};END {for(a in S) print a, S[a]}’ </p>
+<p>netstat -n | awk ‘/^tcp/ {++state[$NF]}; END {for(key in state) print key,”\t”,state[key]}’ </p>
+<p>netstat -n | awk ‘/^tcp/ {++arr[$NF]};END {for(k in arr) print k,”\t”,arr[k]}’ </p>
+<p>netstat -n |awk ‘/^tcp/ {print $NF}’|sort|uniq -c|sort -rn </p>
+<p>netstat -ant | awk ‘{print $NF}’ | grep -v ‘[a-z]’ | sort | uniq -c<br>netstat -ant|awk ‘/ip:80/{split($5,ip,”:”);++S[ip[1]]}END{for (a in S) print S[a],a}’ |sort -n </p>
+<p>netstat -ant|awk ‘/:80/{split($5,ip,”:”);++S[ip[1]]}END{for (a in S) print S[a],a}’ |sort -rn|head -n 10 </p>
+<p>awk ‘BEGIN{printf (“http_code\tcount_num\n”)}{COUNT[$10]++}END{for (a in COUNT) printf a”\t\t”COUNT[a]”\n”}’<br>查找请求数前20个IP（常用于查找攻来源）：<br>netstat -anlp|grep 80|grep tcp|awk ‘{print $5}’|awk -F: ‘{print $1}’|sort|uniq -c|sort -nr|head -n20<br>netstat -ant |awk ‘/:80/{split($5,ip,”:”);++A[ip[1]]}END{for(i in A) print A[i],i}’ |sort -rn|head -n20</p>
+<p>用tcpdump嗅探80端口的访问看看谁最高</p>
+<p>tcpdump -i eth0 -tnn dst port 80 -c 1000 | awk -F”.” ‘{print $1”.”$2”.”$3”.”$4}’ | sort | uniq -c | sort -nr |head -20</p>
+<p>查找较多time_wait连接</p>
+<p>netstat -n|grep TIME_WAIT|awk ‘{print $5}’|sort|uniq -c|sort -rn|head -n20</p>
+<p>找查较多的SYN连接</p>
+<p>netstat -an | grep SYN | awk ‘{print $5}’ | awk -F: ‘{print $1}’ | sort | uniq -c | sort -nr | more</p>
+<p>根据端口列进程<br>netstat -ntlp | grep 80 | awk ‘{print $7}’ | cut -d/ -f1</p>
+<p>查看了连接数和当前的连接数</p>
+<p>netstat -ant | grep $ip:80 | wc -l<br>netstat -ant | grep $ip:80 | grep EST | wc -l</p>
+<p>查看IP访问次数<br>netstat -nat|grep “:80”|awk ‘{print $5}’ |awk -F: ‘{print $1}’ | sort| uniq -c|sort -n</p>
+<p>Linux命令分析当前的链接状况<br>netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</p>
+<p>watch “netstat -n | awk ‘/^tcp/ {++S[\$NF]} END {for(a in S) print a, S[a]}’” # 通过watch可以一直监控</p>
+<p>LAST_ACK 5 #关闭一个TCP连接需要从两个方向上分别进行关闭，双方都是通过发送FIN来表示单方向数据的关闭，当通信双方发送了最后一个FIN的时候，发送方此时处于LAST_ACK状态，当发送方收到对方的确认（Fin的Ack确认）后才真正关闭整个TCP连接；</p>
+<p>SYN_RECV 30  # 表示正在等待处理的请求数；</p>
+<p>ESTABLISHED 1597 # 表示正常数据传输状态； </p>
+<p>FIN_WAIT1 51 # 表示server端主动要求关闭tcp连接； </p>
+<p>FIN_WAIT2 504 # 表示客户端中断连接； </p>
+<p>TIME_WAIT 1057  # 表示处理完毕，等待超时结束的请求数； </p>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
