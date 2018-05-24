@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="full-height">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bulma/0.4.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  
+  <title>linux下安装virtualbox虚拟机命令操作 | Lucas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="linux下安装virtualbox虚拟机命令操作inux下安装virtualbox虚拟机命令操作  无意间看到一篇虚拟机性能介绍的文章，说到开源的virtualbox性很不错，于是最近到官方网站www.virtualbox.org下了当前最新版本VirtualBox-3.1-3.1.2_56127学习研究了一下，开始在windows 7下虚拟安装xp及centeros5系统操作了一下，启动速度比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下安装virtualbox虚拟机命令操作">
+<meta property="og:url" content="https://dissipator.github.io/2018/05/23/linux下安装virtualbox虚拟机命令操作/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="linux下安装virtualbox虚拟机命令操作inux下安装virtualbox虚拟机命令操作  无意间看到一篇虚拟机性能介绍的文章，说到开源的virtualbox性很不错，于是最近到官方网站www.virtualbox.org下了当前最新版本VirtualBox-3.1-3.1.2_56127学习研究了一下，开始在windows 7下虚拟安装xp及centeros5系统操作了一下，启动速度比">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-24T09:48:33.275Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux下安装virtualbox虚拟机命令操作">
+<meta name="twitter:description" content="linux下安装virtualbox虚拟机命令操作inux下安装virtualbox虚拟机命令操作  无意间看到一篇虚拟机性能介绍的文章，说到开源的virtualbox性很不错，于是最近到官方网站www.virtualbox.org下了当前最新版本VirtualBox-3.1-3.1.2_56127学习研究了一下，开始在windows 7下虚拟安装xp及centeros5系统操作了一下，启动速度比">
+  
+    <link rel="alternate" href="/atom.xml" title="Lucas" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/css/nav.css">
+<link rel="stylesheet" href="/css/layout.css">
+  
+
+</head>
+
+<body>
+  <header id="navbar" class="overflow-hidden">
+  <div class="container">
+    <nav class="nav">
+         <div class="nav-left">
+            <a href="/" class="nav-item" style="font-size: 20px;">
+              <span class="logo">Lucas</span>'s Blog
+            </a>
+         </div>
+        <div class="nav-center is-hidden position-relative" id="search_container">
+            <div class="nav-item full-width full-height">
+                <i class="fa fa-search has-padding" aria-hidden="true"></i>
+                <input type="text" id="search_input" class="search-input full-height full-width" placeholder="Search post" autofocus>
+                <i id="close_search" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <div id="search_result"></div>
+        </div>
+        <div class="nav-right nav-menu">
+            <a class="nav-item" id="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            
+            <a class="nav-item" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+        <span class="nav-toggle" id="navMenuDropdown">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div class="navbar-menu position-absolute full-width content-box is-hidden-desktop is-flex flex-column center" style="top: 100%;">
+            
+            <a class="nav-item flex-1" href="/">
+                Home
+            </a>
+            
+            <a class="nav-item flex-1" href="/about">
+                About
+            </a>
+            
+            <a class="nav-item flex-1" href="/tags">
+                Tags
+            </a>
+            
+        </div>
+    </nav>
+  </div>
+</header>
+
+  <div id="main-wrap" class="position-relative" style="margin-top: 55px;">
+      <div class="main-inner-content">
+          <!--博文页面-->
+
+<style>
+    .header-box {
+        height: 370px;
+        filter: blur(10px);
+        background-size: cover;
+        background-color: lightsteelblue;
+    }
+
+    .post-box {
+        padding: 15px;
+        padding-top: 60px;
+        min-height: 80vh;
+        margin-top: -200px;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,.8);
+    }
+
+    .post-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    .flow-chart {
+        text-align: center;
+    }
+
+    img[alt="post-cover"] {
+        display: none;
+    }
+</style>
+<header>
+    <div id="header_box" class="header-box"></div>
+</header>
+<section>
+    <div class="container post-box">
+        <div class="content post-title is-flex center flex-column" style="margin-bottom: 70px; overflow: auto;">
+            <h1 class="has-text-centered" style="padding-bottom: 10px; border-bottom: 3px solid #fff">
+                <strong>linux下安装virtualbox虚拟机命令操作</strong>
+            </h1>
+            
+            <div class="is-flex align-center">
+                <img class="post-avatar" src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-circle-512.png">
+                <span style="padding:0 10px;"> <span class="sub-title">By</span> Lucas</span>
+                <span class="post-date sub-title">at: 2018-05-23</span>
+            </div>
+            
+                <div>
+                    
+                </div>
+            
+        </div>
+        <div class="content" style="overflow: auto">
+            <h1 id="linux下安装virtualbox虚拟机命令操作"><a href="#linux下安装virtualbox虚拟机命令操作" class="headerlink" title="linux下安装virtualbox虚拟机命令操作"></a><a href="http://zscomehuyue.iteye.com/blog/1001701" target="_blank" rel="noopener">linux下安装virtualbox虚拟机命令操作</a></h1><p>inux下安装virtualbox虚拟机命令操作<br>  无意间看到一篇虚拟机性能介绍的文章，说到开源的virtualbox性很不错，于是最近到官方网站<a href="http://www.virtualbox.org下了当前最新版本VirtualBox-3.1-3.1.2_56127学习研究了一下，开始在windows" target="_blank" rel="noopener">www.virtualbox.org下了当前最新版本VirtualBox-3.1-3.1.2_56127学习研究了一下，开始在windows</a> 7下虚拟安装xp及centeros5系统操作了一下，启动速度比vmware要快得多，操作习惯上也很相似，又在linux下操作了一番，界面操作启动和在windows上差不多，虚拟机上xp启动的速度一般在16-17秒左右，在一台 Intel(R) Xeon(R) CPU  1.86GHz （双CPU,4核每CPU），8G内存，Red Hat 3.4.6-8 linux操作系统下（系统自身比较干净，还没安装过其他应用），同时创建了3台虚拟1CPU,1G内存，xp，X界面下操作几乎同时启动，实体机瞬间当前LOAD高达14，感觉很卡，同时不知道何故，3台XP完全启动后其中总一台5分钟内会挂掉。后来改用命令模式操作，3台起来一点问题都没有，xp上跑一些自动测试脚本，观察了一天，还算稳定，有空计划继续往上加上几台看看。 </p>
+<p>   桌面界面上操作相对比较简单，命令操作有点复杂，但是性能比较高，下面介绍一下命令模式下安装操作过程。</p>
+<h2 id="1-rpm包安装"><a href="#1-rpm包安装" class="headerlink" title="1.rpm包安装"></a>1.rpm包安装</h2><p>​    rpm -ivh VirtualBox-3.1-3.1.2_56127_rhel4-1.i386.rpm<br>    因为我的系统版本比较老是RHEL3,不过内核升级到了2.6.9，本想找源码包编译安装，直接拿这个在上面rpm包安装试了好像也没报错。 </p>
+<h2 id="2-添加vboxusers-用户组"><a href="#2-添加vboxusers-用户组" class="headerlink" title="2.添加vboxusers 用户组"></a>2.添加vboxusers 用户组</h2><p>​    usermod -a -G vboxusers root<br>   上面virtualbox rpm包安装好后会自动生成vboxusers组，系统上要用虚拟机的用户都可以把这个组添加进去。 </p>
+<h2 id="3-创建虚拟机"><a href="#3-创建虚拟机" class="headerlink" title="3.创建虚拟机"></a>3.创建虚拟机</h2><p>​    VBoxManage createvm –name “winxp” –register<br>    VBoxManage 是virtualbox的虚拟机管理命令，命令模式下操作几乎都跟他有关。这里创建了一个winxp的虚拟机。<br>    创建完后可以用 VBoxManage list vms 命令查看一下当前可用的虚拟机，也可以用VBoxManage showvminfo winxp 命令查看一下当前虚拟机winxp的状态及一些默认配置。 #4.修改虚拟机设置 </p>
+<h2 id="4-修改虚拟机设置"><a href="#4-修改虚拟机设置" class="headerlink" title="4.修改虚拟机设置"></a>4.修改虚拟机设置</h2><p>​    首先先创建一个磁盘：</p>
+<p>VBoxManage createmedium     [disk|dvd|floppy] –filename <filename><br>                            [–size <megabytes>|–sizebyte <bytes>]<br>                            [–diffparent <uuid>|<filename><br>                            [–format VDI|VMDK|VHD] (default: VDI)<br>                            [–variant Standard,Fixed,Split2G,Stream,ESX]</filename></uuid></bytes></megabytes></filename></p>
+<p>​    VBoxManage createvdi –filename /home/virtualbox/winxp.vdi –size 5000 –remember<br>   修改虚拟机winxp设置，操作系统，内存，显存，启动顺序，磁盘位置，sata磁盘控制器，电源管理接口，CPU设置，网卡接口，远程管理等 </p>
+<p>Warning: ‘–vrdp’ is deprecated. Use ‘–vrde’.<br>Warning: ‘–vrdpport’ is deprecated. Use ‘–vrdeport’.<br>Warning: ‘–vrdpmulticon’ is deprecated. Use ‘–vrdemulticon’.</p>
+<p>VBoxManage modifyvm “winxp” –ostype “WindowsXP” –memory “512” –vram “16” –boot2 disk –boot1 dvd –hda “/home/virtualbox/winxp.vdi” –sata on –acpi on –pae on –hwvirtex on –nic1 hostif –cableconnected1 on –nictype1 “Am79C973” –bridgeadapter1 eth0 –intnet1 brigh1 –macaddress1 auto –vrdp on –vrdpport 4000 –vrdpmulticon on<br>   上面参数具体说明可以用 VBoxManage modifyvm –help 查看了解<br>执行上面命令，可能会碰到如下错误：<br>ERROR: Could not find a storage controller named ‘IDE Controller’<br>   在国外网站上查到需要添加一下IDE接口就可以了，执行如下命令：<br>VBoxManage storagectl winxp –name “IDE Controller” –add ide<br>再执行上面命令即可。 </p>
+<h2 id="5-挂载ISO安装盘"><a href="#5-挂载ISO安装盘" class="headerlink" title="5.挂载ISO安装盘"></a>5.挂载ISO安装盘</h2><p>​    VBoxManage openmedium dvd /home/virtualbox/winxpsp3.iso </p>
+<h2 id="6-系统安装"><a href="#6-系统安装" class="headerlink" title="6.系统安装"></a>6.系统安装</h2><p>​    先将挂载的ISO文件，加到虚拟机的DVD光驱里<br>VBoxManage modifyvm “winxp” –dvd  /home/virtualbox/winxpsp3.iso<br>可能会报错：<br>  ERROR: No storage device attached to device slot 0 on port 1 of controller ‘IDE Controller’<br>  是IDE 端口没设置好<br>执行如下操作：<br>  将winxp.vdi 磁盘放在设备0的第0个端口<br>  VBoxManage storageattach winxp –storagectl “IDE Controller” –port 0 –device 0 –type hdd –medium /home/virtualbox/winxp.vdi<br>将ISO挂载在设备0的第1个端口<br>   VBoxManage storageattach winxp –storagectl “IDE Controller” –port 1 –device 0 –type dvddrive –medium  /home/virtualbox/winxpsp3.iso </p>
+<h2 id="7-开始启动"><a href="#7-开始启动" class="headerlink" title="7.开始启动"></a>7.开始启动</h2><p>​     VBoxManage startvm “winxp” -type vrdp<br>    或者<br>     VBoxHeadless -startvm “winxp” &amp;、 </p>
+<p><strong>第一种：使用 VRDP 方式通过命令行启动虚拟机：</strong> (虚拟机名为：dcsvr08)<br><strong>QHo@qhoferrari1k:~$ VBoxManage startvm dcsvr08 -type vrdp</strong></p>
+<p><strong>第二种 ：使用 Headless 启动无前端图形界面方式： QHo@qhoferrari1k:~$ VBoxHeadless -startvm “dcsvr08”</strong></p>
+<p>   再通windows远程桌面远程连接过去，IP:4000 ，这个端口是之前设置好的，也可以启动的时候加参数，没有加密，直接连远程连接操作。 </p>
+<h2 id="8-安装客户端增强插件"><a href="#8-安装客户端增强插件" class="headerlink" title="8.安装客户端增强插件"></a>8.安装客户端增强插件</h2><p>   mkdir /mnt/iso<br>   mount -o loop /usr/share/virtualbox/VBoxGuestAdditions.iso /mnt/iso<br>  进入系统，打开光驱安装即可 </p>
+<h2 id="9-系统复制克隆"><a href="#9-系统复制克隆" class="headerlink" title="9.系统复制克隆"></a>9.系统复制克隆</h2><p>  virtualbox 不像vmware的磁盘文件，拷贝过来是不能直接使用，因为virtualbox的磁盘文件里都被记录了独立的uuid，所以复制只能用自带的命令克隆磁盘。<br>   vboxmanager clonevdi $(pwd)/winxp.vdi $（pwd）/winxp2.vdi<br>   注意，路径要写全，因为默认路径会指向/root/.virtualbox/<br>  然后再添加注册个虚拟机：<br>     VBoxManage createvm –name “winxp1” –register<br>  查看一下默认设置：<br>  VBoxManage showvminfo winxp2<br>  修改虚拟机配置：<br>     VBoxManage modifyvm “winxp2” –ostype “WindowsXP” –memory “512” –vram “16” –boot1 disk –boot2 dvd –hda “/home/virtualbox/winxp2.vdi” –sata on –acpi on –pae on –hwvirtex on –nic1 hostif –cableconnected1 on –nictype1 “Am79C973” –bridgeadapter1 eth0 –intnet1 brigh2 –macaddress1 auto –vrdp on –vrdpport 5000 –vrdpmulticon on<br>  启动系统：<br>VBoxManage startvm “winxp” -type vrdp </p>
+<h2 id="10-文件共享（数据空间）"><a href="#10-文件共享（数据空间）" class="headerlink" title="10.文件共享（数据空间）"></a>10.文件共享（数据空间）</h2><p>  virtulbaox 可以通过映射，直接将实体机文件共享到虚拟机中。<br>VBoxManage sharedfolder add winxp –name share –hostpath /home/virtualbox/share –transient<br>界面下操作很简单，数据空间打开实体机文件，虚拟机打开网络映射挂载上来就可以。如果虚拟机是linux，需要加载磁盘格式模块：<br>   modprobe vboxvfs<br>   mount -t vboxsf share_net_filename（实体机共享名）  /home/virtualbox/share（虚拟机中文件路径）<br>这样基本实现了virtualbox在linux命令下安装，virtualbox命令很多，还在继续研究学习中。 </p>
+<p><strong>3389是VRDP（远程桌面）监听端口 。 启用VRDP后，一旦虚拟机启动完毕，我们就可以通过远程桌面/XManage等GUI远程管理工具来登录客户操作系统 。</strong></p>
+<p>要确认虚拟机是否在运行 ，可以使用命令<strong>VBoxManage list runningvm</strong> 来查看。<br><strong>QHo@qhoferrari1k:~$ VBoxManage list runningvms</strong></p>
+<p><strong>从命令行关闭虚拟机</strong><br>通过VBoxManage 命令行工具的<strong>VBoxManage controlvm</strong>   <uuid>|<name> 子命令可以改变虚拟机的运行状态，<br>其中常用的几个选项是：</name></uuid></p>
+<p>pause resume reset poweroff savestate acpipowerbutton acpisleepbutton<br>下面示例使用 poweroff 选项关闭虚拟机 <strong>dcsvr08</strong> </p>
+<p><strong>QHo@qhoferrari1k:~$ VBoxManage controlvm dcsvr08 poweroff</strong><br>VirtualBox Command Line Management Interface Version 2.1.4<br>(C) 2005-2009 Sun Microsystems, Inc.<br>All rights reserved.</p>
+<p><strong>QHo@qhoferrari1k:~$ VBoxManage list runningvms</strong><br>VirtualBox Command Line Management Interface Version 2.1.4<br>(C) 2005-2009 Sun Microsystems, Inc.<br>All rights reserved.</p>
+<p>3ce3fd01-7e17-46b3-8394-be9c1b17ee66<br>QHo@qhoferrari1k:~$<br>在poweroff 后马上list runningvms ，可以看到dscvr08已经被关闭，现在只有一台虚机处于运行状态。</p>
+<p>   <a href="http://fengshihua.cublog.cn" target="_blank" rel="noopener">http://fengshihua.cublog.cn</a> </p>
+<p>据有资料说：虚拟机上安装的虚拟系统的内存使用量必须要符合VBOX的要求，即不能超过机器物理内存的40％，换言之，要预留足够的内存供真实系统使用，否则会经常异常死机，或无法运行虚拟系统。举例：我机器内存为512M，虚拟XP分配128M内存，显存分配32M即可。如果虚拟XP分配256M内存，则无法正常运行虚拟，总是异常退出。</p>
+<p>环境：<a href="http://www.linuxidc.com/topicnews.aspx?tid=2" target="_blank" rel="noopener">Ubuntu</a> 15.04 64bit，virtualbox 5.0.16</p>
+<p>准备：下载安装好virtualbox,virtualbox-extensions，准备好iso系统文件，如archlinux.iso。</p>
+<p>1.建立好vbox的目录。</p>
+<p>$ cd<br>$ cd VirtualBox\ VMs/<br>$ mkdir arch<br>$ cd arch</p>
+<p>2.新建一个vbox磁盘，–size参数设置大小，单位：M。</p>
+<p>$ vboxmanage createmedium disk –filename arch.vdi –size 10000</p>
+<p>3.新建vbox虚拟机文件，–ostype设置虚拟机安装的系统格式（windows/ubuntu等），可以使用vboxmanage list ostypes查看vbox支持的系统格式。</p>
+<p>$ vboxmanage createvm –name arch –ostype “linux_64” –register</p>
+<p>4.新建SATA磁盘控制器并将步骤<2>中新建的磁盘绑定到虚拟机文件。</2></p>
+<p>$ vboxmanage storagectl arch –name “SATA Controller” –add sata –controller IntelAHCI<br>$ vboxmanage storageattach arch –storagectl “SATA Controller” –port 0 –device 0 –type hdd –medium arch.vdi</p>
+<p>5.新建IDE控制器，设置它为dvd，并绑定ios文件到该dvd，注意–medium为你的iso路径。</p>
+<p>$ vboxmanage storagectl arch –name “IDE Controller” –add ide<br>$ vboxmanage storageattach arch –storagectl “IDE Controller” –port 0 –device 0 –type dvddrive –medium /path/to/arch.iso</p>
+<p>5.查看自己的网卡，并设置vbox网卡为桥接。</p>
+<p>$ ifconfig</p>
+<p>输出：</p>
+<p>wlp18s0 Link encap:Ethernet HWaddr xx:xx:xx:xx:xx:xx<br>inet addr:192.168.0.101 Bcast:192.168.0.255 Mask:255.255.255.0</p>
+<p>我的网卡是wlp18s0，所以将vbox nic1网卡绑定到它。</p>
+<p>$ vboxmanage modifyvm arch –nic1 bridged –bridgeadapter1 wlp18s0</p>
+<p>6.设置io控制，启动项，内存等。</p>
+<p>$ vboxmanage modifyvm arch –ioapic on<br>$ vboxmanage modifyvm arch –boot1 dvd –boot2 disk –boot3 none –boot4 none<br>$ vboxmanage modifyvm arch –memory 1024 –vram 128</p>
+<p>7.设置rdpe远程桌面。</p>
+<p>$ vboxmanage modifyvm arch –vrdeport 3389 –vrdeaddress 0.0.0.0</p>
+<p>8.后台开启vbox。</p>
+<p>$ vboxmanage startvm arch –type=headless</p>
+<p>9.现在就可以用rdesktop联接后台了</p>
+<p>$ rdesktop localhost:3389</p>
+<p>rdesktop xxx.xxx.xx.xx:3389</p>
+<p>10.安装完成后退出dvd上的iso。</p>
+<p>$ vboxmanage storageattach arch –storagectl “IDE Controller” –port 0 –device 0 –type dvddrive –medium none</p>
+<p>11.查看正在运行的vbox系统，关机。</p>
+<p>$ vboxmanage list runningvms<br>$ vboxmanage controlvm arch poweroff</p>
+<p>最后，其余功能可以查看帮助。</p>
+<p>$ vboxmanage –help</p>
+<p>webvbox </p>
+<p>wget ‘<a href="http://sourceforge.net/projects/phpvirtualbox/files/latest/download&#39;" target="_blank" rel="noopener">http://sourceforge.net/projects/phpvirtualbox/files/latest/download&#39;</a></p>
+
+        </div>
+        <div class="post-reply">
+            
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTYwOC8xMjE0NA">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+            
+            
+            <div id="disqus_thread" style="width: 80%; margin: 0 auto;"></div>
+                <script>
+
+                    /**
+                     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    /*
+                     var disqus_config = function () {
+                     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                     };
+                     */
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://haojen.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </div>
+</section>
+<script>
+    // 获取第一张图, 用以当封面背景图
+    var img = document.querySelectorAll('img')[1]
+
+    if (img) {
+        var header_box = document.querySelector('#header_box')
+        header_box.style.backgroundImage = 'url('+ img.src +')'
+    }
+</script>
+      </div>
+  </div>
+  <style>
+  #footer {
+    min-height: 10vh;
+    background: black;
+    color: #fff;
+  }
+
+  #footer a {
+    color: #e1e1e1;
+  }
+</style>
+<footer id="footer" class="has-text-centered is-flex center">
+  <div class="container has-padding">
+    <div>
+      <div>
+        <!--请您保留作者署名, 主题制作来之不易-->
+        Theme by <a href="http://haojen.github.io/">Haojen Ma</a>
+        <br>
+        Copyright © Lucas 2018
+        <br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/search_core.js"></script>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
